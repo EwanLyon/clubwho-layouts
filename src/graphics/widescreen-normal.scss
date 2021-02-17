@@ -1,0 +1,27 @@
+@import './themes/clubwho-theme.scss';
+
+#centre {
+	display: flex;
+	justify-content: center;
+}
+
+#host {
+	position: absolute;
+	left: 1926px;
+	top: 40px;
+}
+
+#socialMedia {
+	position: absolute;
+	top: 40px;
+}
+
+#webcam {
+	position: absolute;
+	bottom: 59px;
+	right: 59px;
+	width: 260px;
+	height: 288px;
+	border: 1px $accent-blue solid;
+	box-shadow: 0px 0px 5px $accent-blue;
+}

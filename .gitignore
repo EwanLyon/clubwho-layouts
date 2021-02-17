@@ -1,0 +1,6 @@
+node_modules
+coverage
+bower_components
+.cache
+dist
+design.pur

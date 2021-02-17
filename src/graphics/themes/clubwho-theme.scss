@@ -1,0 +1,41 @@
+$fui-font: 'Sansation';
+$primary: #0a0014;
+$accent-yellow: #ffff57;
+$accent-red: #ff3d3d;
+$accent-blue: #37b6ff;
+$glow: #63497e;
+
+$text-primary: #ffffff;
+$text-secondary: #4d4850;
+
+* {
+	font-family: $fui-font;
+	color: $text-primary;
+}
+
+body {
+	margin: 0;
+}
+
+.textRight {
+	text-align: right;
+}
+
+// .fui-text {
+// 	font-family: $fui-font;
+// 	color: white;
+// }
+
+// .fui {
+// 	background: $primary;
+// }
+
+// .fui.yellow-border {
+// 	border-left: 6px solid $accent-yellow;
+// 	border-right: 6px solid $accent-yellow;
+// }
+
+// .fui.red-border {
+// 	border-left: 6px solid $accent-red;
+// 	border-right: 6px solid $accent-red;
+// }

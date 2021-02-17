@@ -1,0 +1,112 @@
+{
+  "name": "clubwho-layouts",
+  "version": "1.0.0",
+  "description": "A bare layout for TS",
+  "files": [
+    "dashboard",
+    "graphics",
+    "extension.js",
+    "extension"
+  ],
+  "keywords": [
+    "",
+    "nodecg-bundle"
+  ],
+  "nodecg": {
+    "compatibleRange": "^1.7.0",
+    "transformBareModuleSpecifiers": true,
+    "dashboardPanels": [
+      {
+        "name": "tester",
+        "title": "Tester",
+        "width": 2,
+        "file": "tester.html",
+        "headerColor": "#0054b9"
+      },
+      {
+        "name": "controls",
+        "title": "Controls",
+        "width": 3,
+        "file": "controls.html",
+        "headerColor": "#0054b9"
+      },
+      {
+        "name": "speedruncontrols",
+        "title": "Speedrun Controls",
+        "width": 3,
+        "file": "speedruncontrols.html",
+        "headerColor": "#0054b9"
+      },
+      {
+        "name": "countdown",
+        "title": "Countdown",
+        "width": 2,
+        "file": "countdown.html",
+        "headerColor": "#0054b9"
+      }
+    ],
+    "graphics": [
+      {
+        "file": "widescreen-normal.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "testing.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "speedrun.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "countdown.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "basic-overlay.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "twitch-assets.html",
+        "width": 0,
+        "height": 0
+      }
+    ]
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.2.0",
+    "@material-ui/styles": "^4.2.0",
+    "gsap": "^2.1.3",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-particles-js": "^2.7.0",
+    "styled-components": "^5.2.1",
+    "typeface-roboto": "0.0.54"
+  },
+  "scripts": {
+    "build": "npm run schema-types && npm run build:extension && npm run build:dashboard && npm run build:graphics",
+    "build:extension": "trash extension && tsc -b ./src/extension/tsconfig.json",
+    "build:dashboard": "trash dashboard && parcel build src/dashboard/*.html --out-dir dashboard --public-url ./ --no-content-hash",
+    "build:graphics": "trash graphics && parcel build src/graphics/*.html --out-dir graphics --public-url ./ --no-content-hash",
+    "watch:extension": "tsc -b tsconfig.node.json --watch",
+    "schema-types": "trash src/types/schemas && nodecg schema-types",
+    "start:solo": "node ../.. --bundlesEnabled=clubwho-layouts",
+    "start": "node ../.."
+  },
+  "devDependencies": {
+    "@types/gsap": "^1.20.2",
+    "@types/react": "^16.8.23",
+    "@types/react-dom": "^16.8.4",
+    "@types/styled-components": "^5.1.7",
+    "less": "^3.10.3",
+    "parcel-bundler": "^1.12.3",
+    "sass": "^1.23.0",
+    "trash-cli": "^2.0.0",
+    "typescript": "^3.4.5"
+  }
+}
