@@ -1,138 +1,180 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { render } from 'react-dom';
-import {} from '../../../../types/browser';
-import './countdown.scss';
+import styled from 'styled-components';
+import { useListenFor, useReplicant } from 'use-nodecg';
 
-import { GlitchText } from './components/glitch-text/glitch-text';
 import { SpotifySong } from '../types/spotify-song';
 
-const spotifyRep = nodecg.Replicant<SpotifySong>('currentSong', 'ncg-spotify');
+import { GlitchText } from './components/glitch-text/glitch-text';
 
-interface Props {}
+const CountdownContainer = styled.div`
+  background: var(--main-col);
+  background-image: ${require('./assets/tv-scanline.png')};
+  background-repeat: repeat;
+  width: 1918px;
+  height: 1078px;
+  box-shadow: inset 0 0 10px $glow;
+  border: 1px var(--glow) solid;
+  animation-name: bg;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 
-interface State {
-	time: number;
-	song: SpotifySong;
-	text: string;
-}
+  & > span {
+    text-shadow: 0px 0px 3px var(--glow);
+  }
+`;
 
-export class Countdown extends React.Component<Props, State> {
-	private formattedTime: string = '03:00';
+const BlockContainer = styled.div`
+  position: absolute;
+  right: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
 
-	constructor(props: Props) {
-		super(props);
-		this.state = {
-			time: 300,
-			song: { name: '', artist: '', albumArt: '', playing: false },
-			text: 'STREAM WILL START SOON'
-		};
-		this.runCountdown = this.runCountdown.bind(this);
-		this.updateCountdown = this.updateCountdown.bind(this);
-		setInterval(this.runCountdown, 1000);
-	}
+  & > * {
+    background: rgba(0, 0, 0, 0.75);
+    padding: 24px;
+    margin: 10px 0;
+    width: fit-content;
+  }
+`;
 
-	songChangeHandler = (newVal: SpotifySong) => {
-		this.setState({
-			song: newVal
-		});
-	};
+const SpotifyContainer = styled.div`
+  display: flex;
+`;
 
-	componentDidMount() {
-		nodecg.listenFor('updateCountdownTime', this.updateCountdown);
-		spotifyRep.on('change', this.songChangeHandler);
-	}
+const SpotifyTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
 
-	componentWillUnmount() {
-		if (super.componentWillUnmount) {
-			super.componentWillUnmount();
-		}
-		spotifyRep.removeListener('change', this.songChangeHandler);
-	}
+const SpotifyTitle = styled.div`
+  font-size: 40px;
+`;
 
-	updateCountdown = (data: { time: number; text: string }) => {
-		this.setState({ time: data.time, text: data.text });
-	};
+const SpotifyArtist = styled.div`
+  text-shadow: none;
+  font-size: 20px;
+  color: #7a7a7a;
+`;
 
-	runCountdown() {
-		if (this.state.time <= -1) {
-			this.formattedTime = '00:00';
-		}
-		let mins = ~~(this.state.time / 60);
-		let seconds = this.state.time - 60 * mins;
-		let formattedMins = ('0' + mins).slice(-2);
-		let formattedSeconds = ('0' + seconds).slice(-2);
-		this.setState({ time: this.state.time - 1 });
-		this.formattedTime = `${formattedMins}:${formattedSeconds}`;
-	}
+const SpotifyArt = styled.img`
+  height: 70px;
+  margin-left: 10px;
+`;
 
-	render() {
-		let spotifyElement;
+const Time = styled.span`
+  font-size: 144px;
+  font-family: 'RobotoMono';
+`;
 
-		if (this.state.song.playing) {
-			spotifyElement = (
-				<div id="spotify" className="countdownBlock">
-					<div id="spotifyText">
-						<GlitchText
-							text={this.state.song.name}
-							animateChange={true}
-							id="songTitle"
-						/>
-						<span id="songArtist">{this.state.song.artist}</span>
-					</div>
-					<img id="spotifyImg" src={this.state.song.albumArt}/>
-				</div>
-			);
-		} else {
-			spotifyElement = <div></div>;
-		}
-		return (
-			<div id="body">
-				<div id="blocks">
-					<span id="title" className="countdownBlock">
-						{this.state.text}
-					</span>
+const Title = styled.span`
+  font-size: 72px;
+  display: block;
+  text-align: right;
+`;
 
-					<div id="time" className="countdownBlock">
-						<GlitchText
-							text={this.formattedTime}
-							animateChange={false}
-							id="time"
-						/>
-					</div>
+const SocialMedia = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
+  font-size: 25px;
 
-					<div id="social" className="countdownBlock">
-						<div id="socialMedia">
-							<span>
-								CLUBWHOM
-								<img
-									src={require('./assets/social/Twitter_col.svg')}
-									id="twitter"
-								/>
-							</span>
-							<span>
-								CLUBWHO
-								<img
-									src={require('./assets/social/YouTube_col.svg')}
-									id="youtube"
-								/>
-							</span>
-							<span>
-								CLUBWHO
-								<img
-									src={require('./assets/social/Twitch_col.svg')}
-									id="twitch"
-								/>
-							</span>
-						</div>
-					</div>
+  & > span {
+    display: flex;
+    align-items: center;
+  }
 
-					{spotifyElement}
-				</div>
+  & > img {
+    height: auto;
+    width: 44px;
+    margin-left: 9px;
+  }
+`;
 
-				<div id="redLine"></div>
-			</div>
-		);
-	}
-}
+const YoutubeImage = styled.img`
+  margin-top: 22px;
+  margin-bottom: 22px;
+`;
+
+const RedLine = styled.span`
+  background: var(--red);
+  position: absolute;
+  top: 0;
+  left: 1690px;
+  height: 1080px;
+  width: 6px;
+`;
+
+export const Countdown: React.FC = () => {
+  const [currentSongRep] = useReplicant<SpotifySong, undefined>('currentSong', undefined, { namespace: 'ncg-spotify' });
+  const [text, setText] = useState('Stream starting soon');
+  const [time, setTime] = useState(180);
+  const [formattedTime, setFormattedTime] = useState('03:00');
+
+  useListenFor('updateCountdownTime', (data: { time: number; text: string }) => {
+    setTime(data.time);
+    setText(data.text);
+    setInterval(runCountdown, 1000);
+  });
+
+  function runCountdown() {
+    if (time <= -1) {
+      setFormattedTime('00:00');
+    }
+    let mins = ~~(time / 60);
+    let seconds = time - 60 * mins;
+    let formattedMins = ('0' + mins).slice(-2);
+    let formattedSeconds = ('0' + seconds).slice(-2);
+    setTime(time - 1);
+    setFormattedTime(`${formattedMins}:${formattedSeconds}`);
+  }
+
+  return (
+    <CountdownContainer>
+      <BlockContainer>
+        <Title>{text}</Title>
+
+        <Time>
+          <GlitchText text={formattedTime} animateChange={false} id="time" />
+        </Time>
+
+        <SocialMedia>
+          <div id="socialMedia">
+            <span>
+              CLUBWHOM
+              <img src={require('./assets/social/Twitter_col.svg')} />
+            </span>
+            <span>
+              CLUBWHO
+              <YoutubeImage src={require('./assets/social/YouTube_col.svg')} />
+            </span>
+            <span>
+              CLUBWHO
+              <img src={require('./assets/social/Twitch_col.svg')} />
+            </span>
+          </div>
+        </SocialMedia>
+
+        {currentSongRep && (
+          <SpotifyContainer>
+            <SpotifyTextContainer>
+              <GlitchText text={currentSongRep.name} animateChange={true} id="songTitle" />
+              <SpotifyArtist>{currentSongRep.artist}</SpotifyArtist>
+            </SpotifyTextContainer>
+            <SpotifyArt src={currentSongRep.albumArt} />
+          </SpotifyContainer>
+        )}
+      </BlockContainer>
+
+      <RedLine />
+    </CountdownContainer>
+  );
+};
 
 render(<Countdown />, document.getElementById('countdown'));

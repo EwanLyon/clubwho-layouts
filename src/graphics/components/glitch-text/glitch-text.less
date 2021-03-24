@@ -35,7 +35,8 @@
 }
 
 .glitch-frames (@n: 20, @index: 0) when (@index <= @n) {
-	@keyframeSel: percentage(@index / @n);
+	// @keyframeSel: percentage(@index / @n);
+	@keyframeSel: percentage(0.4);
 	@rand1: unit(round(`Math.random() * 150`), px);
 	@rand2: unit(round(`Math.random() * 150`), px);
 	@{keyframeSel} {

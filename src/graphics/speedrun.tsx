@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import {} from '../../../../types/browser';
 import './speedrun.scss';
 
-import { Spotify } from './components/spotify/spotify';
+import { Spotify } from './components/spotify';
 import { SpotifySong } from '../types/spotify-song';
 
 const spotifyRep = nodecg.Replicant<SpotifySong>('currentSong', 'ncg-spotify');
@@ -51,12 +51,7 @@ export class Speedrun extends React.Component<Props, State> {
 	render() {
 		return (
 			<div id="body">
-				<Spotify
-					id="spotify"
-					song={this.state.song.name}
-					artist={this.state.song.artist}
-					playing={this.state.song.playing}
-				/>
+				<Spotify />
 				<div id="social">
 					<span>
 						<img
