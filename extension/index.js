@@ -1,20 +1,19 @@
-'use strict';
+"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
+const nodecgApiContext = tslib_1.__importStar(require("./nodecg-api-context"));
 module.exports = (nodecg) => {
-    nodecg.log.info('Working');
-    nodecg.listenFor('twitch-event', 'nodecg-streamlabs', (event) => {
-        switch (event.type) {
-            case 'follow':
-                nodecg.log.info(`Follower: ${event.message.name}`);
-                nodecg.sendMessage('newFollower', event.message.name);
-                break;
-            case 'host':
-                nodecg.log.info(`Host: ${event.message.name} with ${event.message.viewers}`);
-                nodecg.sendMessage('host', { name: event.message.name, viewers: event.message.viewers });
-                break;
-            default:
-                nodecg.log.info(`Other event: ${JSON.stringify(event)}`);
-                break;
-        }
+    // Store a reference to this nodecg API context in a place where other libs can easily access it.
+    // This must be done before any other files are `require`d.
+    nodecgApiContext.set(nodecg);
+    init().then(() => {
+        nodecg.log.info('Initialization successful.');
+    }).catch(error => {
+        nodecg.log.error('Failed to initialize:', error);
     });
 };
+async function init() {
+    require('./twitch');
+    require('./livesplit');
+}
+;

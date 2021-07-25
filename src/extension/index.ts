@@ -1,39 +1,17 @@
-'use strict';
-// NodeCG
-import { NodeCG } from '../../../../types/server'
-// import { inspect } from 'util';
+import * as nodecgApiContext from './nodecg-api-context';
 
-interface NCGStreamLabs {
-	type: string;
-	message: Message;
-}
+module.exports = (nodecg: any) => {
+	// Store a reference to this nodecg API context in a place where other libs can easily access it.
+	// This must be done before any other files are `require`d.
+	nodecgApiContext.set(nodecg);
+	init().then(() => {
+		nodecg.log.info('Initialization successful.');
+	}).catch(error => {
+		nodecg.log.error('Failed to initialize:', error);
+	});
+};
 
-interface Message {
-	id: string;
-	name: string;
-	when?: string;
-	viewers?: number;
-	message?: string;
-	months?: number;
-}
-
-module.exports = (nodecg: NodeCG) => {
-	nodecg.log.info('Working')
-
-	nodecg.listenFor('twitch-event', 'nodecg-streamlabs', (event: NCGStreamLabs) => {
-		switch (event.type) {
-			case 'follow':
-				nodecg.log.info(`Follower: ${event.message.name}`);
-				nodecg.sendMessage('newFollower', event.message.name);
-				break;
-			case 'host':
-				nodecg.log.info(`Host: ${event.message.name} with ${event.message.viewers}`);
-				nodecg.sendMessage('host', {name: event.message.name, viewers: event.message.viewers});
-				break;
-
-			default:
-				nodecg.log.info(`Other event: ${JSON.stringify(event)}`);
-				break;
-		}
-	})
+async function init() {
+	require('./twitch');
+	require('./livesplit');
 };

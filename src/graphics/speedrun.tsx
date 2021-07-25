@@ -1,96 +1,100 @@
-import * as React from 'react';
+import React from 'react';
 import { render } from 'react-dom';
-import {} from '../../../../types/browser';
-import './speedrun.scss';
+import styled from 'styled-components';
 
 import { Spotify } from './components/spotify';
-import { SpotifySong } from '../types/spotify-song';
+import { LiveSplit } from './components/livesplit/livesplit';
 
-const spotifyRep = nodecg.Replicant<SpotifySong>('currentSong', 'ncg-spotify');
+const SpeedrunContainer = styled.div`
+	background: #0a0014;
+	width: 1920px;
+	height: 1080px;
+`;
 
-interface Props {}
+const FullBorder = styled.div`
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 1918px; // Border
+	height: 1078px;
+	box-shadow: inset 0 0 10px #63497e;
+	border: 1px #63497e solid;
+	pointer-events: none;
+`;
 
-interface State {
-	song: SpotifySong;
-}
+const SocialName = styled.span`
+	display: flex;
+	align-items: center;
+	margin: 0 70px;
+	font-size: 25px;
+	text-shadow: 0px 0px 3px #63497e;
+`;
+const SocailImg = styled.img`
+	margin-right: 30px;
+	height: 39px;
+	filter: drop-shadow(0px 0px 5px #63497e);
+`;
 
-export class Speedrun extends React.Component<Props, State> {
-	private livesplitBorder: React.RefObject<HTMLDivElement>;
+const HorizontalCentre = styled.div`
+	width: 100%;
+	height: 849px;
+	display: flex;
+	align-items: center;
+`;
 
-	constructor(props: Readonly<{}>) {
-		super(props);
-		this.state = {
-			song: { name: '', artist: '', albumArt: '', playing: false }
-		};
-		this.livesplitBorder = React.createRef();
-		this.updateLSHeight = this.updateLSHeight.bind(this);
-	}
+const Vertical = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	height: 849px; // Border
+`;
 
-	componentDidMount() {
-		spotifyRep.on('change', this.songChangeHandler);
-		nodecg.listenFor('updateLivesplitHeight', this.updateLSHeight);
-	}
+const WebcamBox = styled.div`
+	height: 454px;
+	width: 407px;
+	border-bottom: 1px #63497e solid;
+	box-shadow: 0px 0px 10px #63497e;
+`;
 
-	componentWillUnmount() {
-		if (super.componentWillUnmount) {
-			super.componentWillUnmount();
-		}
-		spotifyRep.removeListener('change', this.songChangeHandler);
-	}
+const MainGameplay = styled.div`
+	border-left: 1px #63497e solid;
+	border-bottom: 1px #63497e solid;
+	box-shadow: 0px 0px 10px #63497e;
+	position: absolute;
+	width: 1512px;
+	height: 849px;
+	right: -1px;
+	top: -1px;
+`;
 
-	songChangeHandler = (newVal: SpotifySong) => {
-		this.setState({
-			song: newVal
-		});
-	};
+const BottomSegment = styled.div`
+	width: 100%;
+	height: 230px;
+	display: flex;
+	align-items: center;
+`;
 
-	updateLSHeight(height: number) {
-		this.livesplitBorder.current!.style.height = `${height}px`;
-	}
-
-	render() {
-		return (
-			<div id="body">
-				<Spotify />
-				<div id="social">
-					<span>
-						<img
-							src={require('./assets/social/Twitter.svg')}
-							id="twitter"
-						/>
+export const Speedrun: React.FC = () => {
+	return (
+		<SpeedrunContainer>
+			<Spotify />
+			<HorizontalCentre>
+				<Vertical>
+					<WebcamBox />
+					<SocialName>
+						<SocailImg src={require('./assets/social/Twitter.svg')} />
 						CLUBWHOM
-					</span>
-					<span>
-						<img
-							src={require('./assets/social/YouTube.svg')}
-							id="youtube"
-							/>
-						CLUBWHO
-					</span>
-					<span>
-						<img
-							src={require('./assets/social/Twitch.svg')}
-							id="twitch"
-							/>
-						CLUBWHO
-					</span>
-				</div>
-				<div className="horizontalCentre">
-					<div className="vertical">
-						<div id="webcamBox" className="border-box"></div>
-						<div
-							id="livesplitBorder"
-							className="border-box"
-							ref={this.livesplitBorder}
-						/>
-					</div>
-					<div id="mainGameplay" className="border-box" />
-				</div>
-
-				<div id="fullBorder"></div>
-			</div>
-		);
-	}
-}
+					</SocialName>
+				</Vertical>
+				<MainGameplay />
+			</HorizontalCentre>
+			<BottomSegment>
+				<LiveSplit /> 
+			</BottomSegment>
+			<FullBorder />
+		</SpeedrunContainer>
+	);
+};
 
 render(<Speedrun />, document.getElementById('speedrun'));
