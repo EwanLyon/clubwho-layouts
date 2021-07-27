@@ -1,0 +1,279 @@
+{
+	"Run": {
+		"$": { "version": "1.7.0" },
+		"GameIcon": [""],
+		"GameName": ["Mario & Sonic at the Olympic Games Tokyo 2020"],
+		"CategoryName": ["All Events Gold Medals"],
+		"Metadata": [
+			{
+				"Run": [{ "$": { "id": "" } }],
+				"Platform": [{ "_": "Switch", "$": { "usesEmulator": "False" } }],
+				"Region": ["USA / NTSC"],
+				"Variables": [{ "Variable": [{ "_": "All Events Gold Medals Normal", "$": { "name": "Difficulty" } }] }]
+			}
+		],
+		"Offset": ["00:00:00"],
+		"AttemptCount": ["2"],
+		"AttemptHistory": [
+			{
+				"Attempt": [
+					{
+						"$": {
+							"id": "1",
+							"started": "07/25/2021 11:22:16",
+							"isStartedSynced": "True",
+							"ended": "07/25/2021 12:37:00",
+							"isEndedSynced": "True"
+						},
+						"RealTime": ["01:14:44.7350000"]
+					}
+				]
+			}
+		],
+		"Segments": [
+			{
+				"Segment": [
+					{
+						"Name": ["100m"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:00:46.9570000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:00:46.9570000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:00:46.9570000"] }] }]
+					},
+					{
+						"Name": ["110m Hurdles"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:01:40.3030000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:00:53.3460000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:00:53.3460000"] }] }]
+					},
+					{
+						"Name": ["4 x 100m Hurdles"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:02:44.6050000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:01:04.3020000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:01:04.3020000"] }] }]
+					},
+					{
+						"Name": ["Javelin Throw"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:03:59.7640000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:01:15.1590000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:01:15.1590000"] }] }]
+					},
+					{
+						"Name": ["Dream Racing"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:06:37.1170000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:02:37.3530000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:02:37.3530000"] }] }]
+					},
+					{
+						"Name": ["Dream Shooting"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:09:47.7410000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:03:10.6240000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:03:10.6240000"] }] }]
+					},
+					{
+						"Name": ["Surfing"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:12:22.8980000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:02:35.1570000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:02:35.1570000"] }] }]
+					},
+					{
+						"Name": ["Sport Cimbing"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:16:20.2280000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:03:57.3300000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:03:57.3300000"] }] }]
+					},
+					{
+						"Name": ["Discus Throw"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:17:51.8600000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:01:31.6320000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:01:31.6320000"] }] }]
+					},
+					{
+						"Name": ["Triple Jump"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:19:07.0500000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:01:15.1900000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:01:15.1900000"] }] }]
+					},
+					{
+						"Name": ["Skateboarding"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:21:13.4470000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:02:06.3970000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:02:06.3970000"] }] }]
+					},
+					{
+						"Name": ["Boxing"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:23:45.5510000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:02:32.1040000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:02:32.1040000"] }] }]
+					},
+					{
+						"Name": ["Karate"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:24:47.1100000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:01:01.5590000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:01:01.5590000"] }] }]
+					},
+					{
+						"Name": ["Football"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:29:18.9490000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:04:31.8390000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:04:31.8390000"] }] }]
+					},
+					{
+						"Name": ["Dream Karate"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:31:10.3540000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:01:51.4050000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:01:51.4050000"] }] }]
+					},
+					{
+						"Name": ["Equestrian"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:33:02.2770000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:01:51.9230000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:01:51.9230000"] }] }]
+					},
+					{
+						"Name": ["Gymnastics"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:37:02.2870000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:04:00.0100000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:04:00.0100000"] }] }]
+					},
+					{
+						"Name": ["Swimming"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:38:15.4940000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:01:13.2070000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:01:13.2070000"] }] }]
+					},
+					{
+						"Name": ["Canoe"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:39:26.0300000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:01:10.5360000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:01:10.5360000"] }] }]
+					},
+					{
+						"Name": ["Rugby Sevens"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:42:48.6360000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:03:22.6060000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:03:22.6060000"] }] }]
+					},
+					{
+						"Name": ["Badminton"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:44:53.6910000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:02:05.0550000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:02:05.0550000"] }] }]
+					},
+					{
+						"Name": ["Table Tennis"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:47:02.2980000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:02:08.6070000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:02:08.6070000"] }] }]
+					},
+					{
+						"Name": ["Fencing"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:48:08.8330000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:01:06.5350000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:01:06.5350000"] }] }]
+					},
+					{
+						"Name": ["Archery"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:49:58.8030000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:01:49.9700000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:01:49.9700000"] }] }]
+					},
+					{
+						"Name": ["Judo"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:50:46.9060000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:00:48.1030000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:00:48.1030000"] }] }]
+					},
+					{
+						"Name": ["10m Platform"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:52:23.8690000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:01:36.9630000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:01:36.9630000"] }] }]
+					},
+					{
+						"Name": ["100m (64)"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:52:58.6730000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:00:34.8040000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:00:34.8040000"] }] }]
+					},
+					{
+						"Name": ["400m Hurdles"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:53:53.6020000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:00:54.9290000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:00:54.9290000"] }] }]
+					},
+					{
+						"Name": ["Vault"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["00:56:40.1610000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:02:46.5590000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:02:46.5590000"] }] }]
+					},
+					{
+						"Name": ["Volleyball"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["01:05:03.9960000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:08:23.8350000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:08:23.8350000"] }] }]
+					},
+					{
+						"Name": ["Shooting"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["01:06:53.4720000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:01:49.4760000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:01:49.4760000"] }] }]
+					},
+					{
+						"Name": ["Kayak"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["01:07:44.9130000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:00:51.4410000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:00:51.4410000"] }] }]
+					},
+					{
+						"Name": ["Long Jump"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["01:09:35.7470000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:01:50.8340000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:01:50.8340000"] }] }]
+					},
+					{
+						"Name": ["Marathon"],
+						"Icon": [""],
+						"SplitTimes": [{ "SplitTime": [{ "$": { "name": "Personal Best" }, "RealTime": ["01:14:44.7350000"] }] }],
+						"BestSegmentTime": [{ "RealTime": ["00:05:08.9880000"] }],
+						"SegmentHistory": [{ "Time": [{ "$": { "id": "1" }, "RealTime": ["00:05:08.9880000"] }] }]
+					}
+				]
+			}
+		],
+		"AutoSplitterSettings": [""]
+	}
+}

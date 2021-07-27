@@ -22,3 +22,11 @@ interface GameRealTime {
 	gameTime?: number;
 	realTime?: number;
 }
+
+export interface RunMetadata {
+	category?: string;
+	pb?: number;
+	sumOfBest?: number;
+	attempts?: string;
+	successfulAttempts?: string;
+}

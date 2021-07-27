@@ -2,54 +2,61 @@ import React from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { Split as ISplit } from '../../../types/livesplit';
 
-const SplitContainer = styled.div`
+const MaSSplitContainer = styled.div`
+	font-family: Tokyo2020;
 	padding-left: 20px;
 	box-sizing: border-box;
-	${(props: SplitStyles) => (props.current ? `height: 100%` : `height: 75%`)};
-	${(props: SplitStyles) => (props.current ? `min-width: 250px` : `min-width: 200px`)};
-	background: ${(props: SplitStyles) =>
-			!props.current && 'linear-gradient( rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75) ),'}
-		url(${(props: SplitStyles) => props.img});
-	background-size: cover;
+	height: ${(props: SplitStyles) => (props.current ? '100%' : '75%')};
+	min-width: ${(props: SplitStyles) => (props.current ? '118px' : '90px')};
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
-	box-shadow: inset 0px 0px 20px 14px ${(props: SplitStyles) => props.shadowCol ?? '#000'};
+	align-items: center;
 	transition: 1s;
-	${(props: SplitStyles) => props.current && `font-weight: bold !important; border: 1px solid #63497e;`}
-	${(props: SplitStyles) => !props.current && `border-top: 1px solid #63497e; border-bottom: 1px solid #63497e;`};
-	${(props: SplitStyles) => props.best && RainbowMixin}
+	${(props: SplitStyles) => props.current && 'font-weight: bold !important;'}
+	opacity: ${(props: SplitStyles) => (props.current || props.old ? 1 : 0.5)};
+	margin: 0 ${(props: SplitStyles) => (props.current ? 30 : 10)}px;
+
+	& > span {
+		font-size: ${(props: SplitStyles) => (props.current ? 25 : 15)}px;
+	}
+`;
+
+const EventImg = styled.img`
+	object-fit: contain;
+	flex-grow: 1;
+	width: 100%;
 `;
 
 const SplitName = styled.span`
-	color: #ffffff;
-	font-size: 20px;
-	text-shadow: 0px 0px 3px #000000;
+	color: #000000;
+	white-space: nowrap;
 `;
 
 const SplitTime = styled.span`
-	color: #ffffff;
-	text-shadow: 0px 0px 3px #000000;
+	color: #000000;
 `;
 
 const DeltaTime = styled.span`
+	color: #000000;
+	${(props: SplitStyles) => props.best && RainbowMixin}
 	font-weight: lighter;
-	text-shadow: 0px 0px 3px #000000;
 `;
 
-const rainbowShadow = keyframes`
-	0% { box-shadow: inset 0px 0px 20px 14px #ff0000; }
-	14% { box-shadow: inset 0px 0px 20px 14px #ff7f00; }
-	29% { box-shadow: inset 0px 0px 20px 14px #ffff00; }
-	43% { box-shadow: inset 0px 0px 20px 14px #00ff00; }
-	57% { box-shadow: inset 0px 0px 20px 14px #0000ff; }
-	71% { box-shadow: inset 0px 0px 20px 14px #4b0082; }
-	85% { box-shadow: inset 0px 0px 20px 14px #9400d3; }
-	100% { box-shadow: inset 0px 0px 20px 14px #ff0000; }
+// @pre
+const rainbowColour = keyframes`
+	\ 0% { color: #ff0000; }
+	\ 14% { color: #ff7f00; }
+	\ 29% { color: #ffff00; }
+	\ 43% { color: #00ff00; }
+	\ 57% { color: #0000ff; }
+	\ 71% { color: #4b0082; }
+	\ 85% { color: #9400d3; }
+	\ 100% { color: #ff0000; }
 `;
 
 const RainbowMixin = css`
-	animation: ${rainbowShadow} 5s linear infinite;
+	animation: ${rainbowColour} 5s linear infinite;
 `;
 
 interface SplitStyles {
@@ -57,12 +64,13 @@ interface SplitStyles {
 	current?: boolean;
 	shadowCol?: string;
 	best?: boolean;
+	old?: boolean;
 }
 
 interface Props {
 	name: string;
 	current?: boolean;
-	backgroundImg: string;
+	eventImg: string;
 	id?: string;
 	split: ISplit | undefined;
 	liveDelta?: string;
@@ -83,8 +91,8 @@ function msToTimeStr(ms: number): string {
 	}
 }
 
-export const Split: React.FC<Props> = (props: Props) => {
-	let deltaColour = '#ffffff';
+export const MaSSplit: React.FC<Props> = (props: Props) => {
+	let deltaColour = '#000000';
 
 	if (props.split) {
 		switch (props.split.state) {
@@ -114,19 +122,28 @@ export const Split: React.FC<Props> = (props: Props) => {
 		splitTime = msToTimeStr(props.split.bestRun.realTime);
 	}
 
+	let deltaTime = props.split?.delta ?? '';
+	if (props.liveDelta) {
+		deltaTime = props.liveDelta;
+	} else if (deltaTime !== '' && deltaTime.charAt(0) !== '-') {
+		deltaTime = `+${deltaTime}`;
+	}
+
 	return (
-		<SplitContainer
+		<MaSSplitContainer
 			id={props.id}
-			img={props.backgroundImg}
+			img={props.eventImg}
 			current={props.current}
-			shadowCol={deltaColour === '#ffffff' ? undefined : deltaColour}
+			shadowCol={deltaColour === '#000000' ? undefined : deltaColour}
 			best={props.split?.state === 'best'}
+			old={Boolean(deltaTime)}
 		>
+			<EventImg src={props.eventImg} />
 			<SplitName>{props.name}</SplitName>
 			<SplitTime>{splitTime}</SplitTime>
-			<DeltaTime>
-				{props.liveDelta ? props.liveDelta : props.split?.delta ?? ''}
+			<DeltaTime best={props.split?.state === 'best'} style={{ color: deltaColour !== '#000000' ? deltaColour : '' }}>
+				{deltaTime}
 			</DeltaTime>
-		</SplitContainer>
+		</MaSSplitContainer>
 	);
 };

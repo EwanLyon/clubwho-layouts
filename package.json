@@ -89,6 +89,11 @@
         "height": 1080
       },
       {
+        "file": "speedrun-mas.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
         "file": "twitch-assets.html",
         "width": 0,
         "height": 0
@@ -104,6 +109,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-particles-js": "^3.4.1",
+    "react-tsparticles": "^1.32.0",
     "styled-components": "^5.2.1",
     "typeface-roboto": "1.1.13",
     "use-nodecg": "^0.4.1-1",

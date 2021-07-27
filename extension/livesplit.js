@@ -25,6 +25,7 @@ const timerRep = nodecg.Replicant('livesplit:timer', {
     },
     persistent: false
 });
+const runMetadataRep = nodecg.Replicant('livesplit:runMetadata');
 let lastData;
 /* LOCAL LIVESPLIT */
 /* We don't want to constantly be polling for the time so we run (another) livesplit timer */
@@ -157,10 +158,10 @@ function timeStrToMS(time) {
         ts.unshift('00');
     }
     if (time[0] === '-') {
-        return -Date.UTC(1970, 0, 1, Math.abs(Number(ts[0])), Math.abs(Number(ts[1])), Math.abs(Number(ts[2])));
+        return -Date.UTC(1970, 0, 1, Math.abs(Number(ts[0])), Math.abs(Number(ts[1])), Math.abs(Number(ts[2])), (Math.abs(Number(ts[2])) % 1) * 1000);
     }
     else {
-        return Date.UTC(1970, 0, 1, Math.abs(Number(ts[0])), Math.abs(Number(ts[1])), Math.abs(Number(ts[2])));
+        return Date.UTC(1970, 0, 1, Math.abs(Number(ts[0])), Math.abs(Number(ts[1])), Math.abs(Number(ts[2])), (Math.abs(Number(ts[2])) % 1) * 1000);
     }
 }
 /* SPLITS PARSING */
@@ -169,10 +170,12 @@ function parseSplitsFile(fileLocation) {
     splitsFileLocRep.value = fileLocation;
     let splitsArr = [];
     xml2js_1.parseString(fs_1.default.readFileSync(fileLocation).toString(), (err, lssFile) => {
+        var _a;
         if (err) {
             nodecg.log.error('[LiveSplit] Error reading splits file: ' + err.message);
             return;
         }
+        // Get all split times
         splitsArr = lssFile.Run.Segments[0].Segment.map((segment, i) => {
             var _a, _b, _c;
             const split = {
@@ -188,7 +191,15 @@ function parseSplitsFile(fileLocation) {
             };
             return split;
         });
+        // Get run info
+        runMetadataRep.value = {
+            attempts: lssFile.Run.AttemptCount[0],
+            category: lssFile.Run.CategoryName,
+            pb: (_a = splitsArr[splitsArr.length - 1].bestRun) === null || _a === void 0 ? void 0 : _a.realTime,
+            sumOfBest: splitsArr.reduce((a, b) => { var _a, _b; return a + ((_b = (_a = b.bestSplit) === null || _a === void 0 ? void 0 : _a.realTime) !== null && _b !== void 0 ? _b : 0); }, 0)
+        };
         splitsRep.value = splitsArr;
+        nodecg.log.info(`[LiveSplit] Parsing ${fileLocation} successful!`);
     });
 }
 function resetSplits() {

@@ -6,7 +6,7 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
 import { Timer, Split as ISplit } from '../../../types/livesplit';
 
-import { Split } from './split';
+import { PortalSplit } from './portal-split';
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -71,25 +71,42 @@ function msToTimeStr(ms: number): string {
 	}
 }
 
-const portalSplits = [
-	{ name: '00/01', img: '../shared/split-images/portal/Portal_Test_Chamber_00.png' },
-	{ name: '02/03', img: '../shared/split-images/portal/Portal_Test_Chamber_02.png' },
-	{ name: '04/05', img: '../shared/split-images/portal/Portal_Test_Chamber_04.png' },
-	{ name: '06/07', img: '../shared/split-images/portal/Portal_Test_Chamber_05.png' },
-	{ name: '08', img: '../shared/split-images/portal/Portal_Test_Chamber_08.png' },
-	{ name: '09', img: '../shared/split-images/portal/Portal_Test_Chamber_09.png' },
-	{ name: '10', img: '../shared/split-images/portal/Portal_Test_Chamber_10.png' },
-	{ name: '11/12', img: '../shared/split-images/portal/Portal_Test_Chamber_11.png' },
-	{ name: '13', img: '../shared/split-images/portal/Portal_Test_Chamber_13.png' },
-	{ name: '14', img: '../shared/split-images/portal/Portal_Test_Chamber_14.png' },
-	{ name: '15', img: '../shared/split-images/portal/Portal_Test_Chamber_15.png' },
-	{ name: '16', img: '../shared/split-images/portal/Portal_Test_Chamber_16.png' },
-	{ name: '17', img: '../shared/split-images/portal/Portal_Test_Chamber_17.png' },
-	{ name: '18', img: '../shared/split-images/portal/Portal_Test_Chamber_18.png' },
-	{ name: '19', img: '../shared/split-images/portal/Portal_Test_Chamber_19.png' },
-	{ name: 'e00', img: '../shared/split-images/portal/Portal_chamber19_03.png' },
-	{ name: 'e01', img: '../shared/split-images/portal/Portal_chamber19_10.png' },
-	{ name: 'e02', img: '../shared/split-images/portal/Portal_chamber19_09.png' },
+// 34 events
+const masSplits = [
+	{ name: '100m', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: '110m Hurdles', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: '4x 100m Relay', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: 'Javelin Throw', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: 'Dream Racing', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: 'Dream Shooting', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: 'Surfing', img: '../shared/split-images/mariosonicolympics/picto-srf.svg' },
+	{ name: 'Sport Climbing', img: '../shared/split-images/mariosonicolympics/picto-clb.svg' },
+	{ name: 'Discus Throw', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: 'Triple Jump', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: 'Skateboarding', img: '../shared/split-images/mariosonicolympics/picto-skb.svg' },
+	{ name: 'Boxing', img: '../shared/split-images/mariosonicolympics/picto-box.svg' },
+	{ name: 'Karate', img: '../shared/split-images/mariosonicolympics/picto-kte.svg' },
+	{ name: 'Football', img: '../shared/split-images/mariosonicolympics/picto-fbl.svg' },
+	{ name: 'Dream Karate', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: 'Equestrian', img: '../shared/split-images/mariosonicolympics/picto-equ.svg' },
+	{ name: 'Gymnastics', img: '../shared/split-images/mariosonicolympics/picto-gar.svg' },
+	{ name: 'Swimming', img: '../shared/split-images/mariosonicolympics/picto-swm.svg' },
+	{ name: 'Canoe', img: '../shared/split-images/mariosonicolympics/picto-csp.svg' },
+	{ name: 'Rugby Sevens', img: '../shared/split-images/mariosonicolympics/picto-rug.svg' },
+	{ name: 'Badminton', img: '../shared/split-images/mariosonicolympics/picto-bdm.svg' },
+	{ name: 'Table Tennis', img: '../shared/split-images/mariosonicolympics/picto-tte.svg' },
+	{ name: 'Fencing', img: '../shared/split-images/mariosonicolympics/picto-fen.svg' },
+	{ name: 'Archery', img: '../shared/split-images/mariosonicolympics/picto-arc.svg' },
+	{ name: '1964 Judo', img: '../shared/split-images/mariosonicolympics/picto-.svg' },
+	{ name: '1964 10m Platform', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: '1964 100m', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: '1964 400m Hurdles', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: '1964 Vault', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: '1964 Volleyball', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: '1964 Shooting', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: '1964 Kayak', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: '1964 Long Jump', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: '1964 Marathon', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
 ];
 
 export const LiveSplit: React.FC<Props> = (props: Props) => {
@@ -109,7 +126,7 @@ export const LiveSplit: React.FC<Props> = (props: Props) => {
 		return <></>;
 	}
 
-	const splits = portalSplits.map((split, i) => {
+	const splits = masSplits.map((split, i) => {
 		let liveDelta: string | undefined = undefined;
 		if (currentSplitRep === i) {
 			const currentSplitValue = splitsRep[currentSplitRep];
@@ -125,7 +142,7 @@ export const LiveSplit: React.FC<Props> = (props: Props) => {
 			}
 		}
 		return (
-			<Split
+			<PortalSplit
 				id={`split-${i}`}
 				key={split.name}
 				name={split.name}

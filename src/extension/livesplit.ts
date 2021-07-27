@@ -4,7 +4,7 @@ import livesplitCore from 'livesplit-core';
 import fs from 'fs';
 import { parseString } from 'xml2js';
 
-import { Commands, Events, Getters, Split, Timer } from '../types/livesplit';
+import { Commands, Events, Getters, RunMetadata, Split, Timer } from '../types/livesplit';
 
 const nodecg = nodecgApiContext.get();
 
@@ -28,6 +28,7 @@ const timerRep = nodecg.Replicant<Timer>('livesplit:timer', {
 	},
 	persistent: false
 });
+const runMetadataRep = nodecg.Replicant<RunMetadata>('livesplit:runMetadata');
 
 let lastData: string;
 
@@ -198,9 +199,9 @@ function timeStrToMS(time: string) {
 	}
 
 	if (time[0] === '-') {
-		return -Date.UTC(1970, 0, 1, Math.abs(Number(ts[0])), Math.abs(Number(ts[1])), Math.abs(Number(ts[2])));
+		return -Date.UTC(1970, 0, 1, Math.abs(Number(ts[0])), Math.abs(Number(ts[1])), Math.abs(Number(ts[2])), (Math.abs(Number(ts[2])) % 1) * 1000);
 	} else {
-		return Date.UTC(1970, 0, 1, Math.abs(Number(ts[0])), Math.abs(Number(ts[1])), Math.abs(Number(ts[2])));
+		return Date.UTC(1970, 0, 1, Math.abs(Number(ts[0])), Math.abs(Number(ts[1])), Math.abs(Number(ts[2])), (Math.abs(Number(ts[2])) % 1) * 1000);
 	}
 }
 
@@ -215,11 +216,12 @@ function parseSplitsFile(fileLocation: string) {
 			nodecg.log.error('[LiveSplit] Error reading splits file: ' + err.message);
 			return;
 		}
-		
+
+		// Get all split times
 		splitsArr = lssFile.Run.Segments[0].Segment.map((segment: Record<any, any>, i: number) => {
 			const split: Split = {
 				index: i,
-				bestRun: { 
+				bestRun: {
 					// gameTime: timeStrToMS(segment.SplitTimes[0]?.SplitTime[0]?.GameTime[0]),,
 					realTime: timeStrToMS(segment.SplitTimes[0]?.SplitTime[0]?.RealTime[0]),
 				},
@@ -230,8 +232,17 @@ function parseSplitsFile(fileLocation: string) {
 			}
 			return split;
 		});
+		
+		// Get run info
+		runMetadataRep.value = {
+			attempts: lssFile.Run.AttemptCount[0],
+			category: lssFile.Run.CategoryName,
+			pb: splitsArr[splitsArr.length - 1].bestRun?.realTime,
+			sumOfBest: splitsArr.reduce((a, b) => a + (b.bestSplit?.realTime ?? 0), 0)
+		}
 
 		splitsRep.value = splitsArr;
+		nodecg.log.info(`[LiveSplit] Parsing ${fileLocation} successful!`);
 	});
 }
 
