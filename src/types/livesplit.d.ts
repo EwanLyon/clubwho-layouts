@@ -10,23 +10,27 @@ export interface Timer {
 
 export interface Split {
 	index: number;
-	time?: GameRealTime;
+	time?: number;
 	state?: 'aheadGaining' | 'aheadLosing' | 'behindGaining' | 'behindLosing' | 'best';
 	delta?: string;
-	bestSplit?: GameRealTime;
-	bestRun?: GameRealTime;
+	bestSplit: number;
+	bestRun: number;
 	splitTime?: number;
-}
-
-interface GameRealTime {
-	gameTime?: number;
-	realTime?: number;
+	splitHistory: number[];
 }
 
 export interface RunMetadata {
 	category?: string;
 	pb?: number;
 	sumOfBest?: number;
-	attempts?: string;
-	successfulAttempts?: string;
+	attempts: number;
+	successfulAttempts: number;
+	previousRuns: PreviousRun[];
+}
+
+interface PreviousRun {
+	start: Date;
+	end: Date;
+	time: number;
+	finished: boolean;
 }

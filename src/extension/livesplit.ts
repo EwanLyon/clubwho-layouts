@@ -4,7 +4,7 @@ import livesplitCore from 'livesplit-core';
 import fs from 'fs';
 import { parseString } from 'xml2js';
 
-import { Commands, Events, Getters, RunMetadata, Split, Timer } from '../types/livesplit';
+import { Commands, Events, Getters, PreviousRun, RunMetadata, Split, Timer } from '../types/livesplit';
 
 const nodecg = nodecgApiContext.get();
 
@@ -14,9 +14,8 @@ const PIPE_PATH = '\\\\.\\pipe\\';
 const client = net.connect(PIPE_PATH + PIPE_NAME);
 
 const Events = ["start", "split", "pause", "reset", "resume", "scroll_down", "scroll_up", "skip_split", "switch_comparison_next", "switch_comparison_previous", "undo_all_pauses", "undo_split"];
-// const timeComparison = 'RealTime';
+const timeComparison = 'RealTime';
 // NodeCG Reps
-// const stateRep = nodecg.Replicant('livesplit:state', {persistent: false});
 const splitsRep = nodecg.Replicant<Split[]>('livesplit:splitIndex', { defaultValue: [], persistent: false });
 const currentSplitRep = nodecg.Replicant<number>('livesplit:currentSplit', { defaultValue: 0, persistent: false });
 const splitsFileLocRep = nodecg.Replicant<string>('livesplit:splitsFileLocations', { defaultValue: '' });
@@ -63,6 +62,7 @@ client.on('data', (data) => {
 
 	// LiveSplit event
 	if (Events.includes(dataStr) || dataStr.startsWith("reset") || dataStr.startsWith("split")) {
+		// Reset
 		if (dataStr.startsWith("reset")) {
 			nodecg.sendMessage('livesplit:reset', dataStr.split(' ')[1]);
 			currentSplitRep.value = 0;
@@ -74,6 +74,7 @@ client.on('data', (data) => {
 			return;
 		}
 
+		// Split
 		if (dataStr.startsWith("split") || dataStr === 'skip_split') {
 			currentSplitRep.value++;
 			if (dataStr.split(' ').length > 1) {
@@ -82,8 +83,10 @@ client.on('data', (data) => {
 				})
 			}
 
+			// Finish!
 			if (currentSplitRep.value >= splitsRep.value.length) {
 				timerRep.value.state = 'Ended';
+				runMetadataRep.value.successfulAttempts++;
 				timer.split();
 			}
 		}
@@ -95,6 +98,7 @@ client.on('data', (data) => {
 				timer.initializeGameTime();
 				timer.start();
 				timerRep.value.state = 'Running';
+				runMetadataRep.value.attempts++;
 				break;
 
 			case 'pause':
@@ -131,6 +135,10 @@ client.on('end', () => {
 	nodecg.log.info('[LiveSplit] Disconnected');
 });
 
+client.on('error', (err) => {
+	nodecg.log.error('[LiveSplit] Connection error: ' + err.message);
+})
+
 // @ts-ignore
 function sendLivesplitCommand(cmd: Commands) {
 	client.write(`${cmd}\r\n`)
@@ -164,7 +172,7 @@ async function getSplitInformation(splitIndex: number): Promise<Split> {
 
 	const splitTime = calcSplitTime(splitIndex);
 
-	if (currentSplitInfo.bestSplit?.realTime && splitTime < currentSplitInfo.bestSplit?.realTime) {
+	if (currentSplitInfo.bestSplit && splitTime < currentSplitInfo.bestSplit) {
 		splitState = 'best';
 	}
 
@@ -172,10 +180,7 @@ async function getSplitInformation(splitIndex: number): Promise<Split> {
 		...currentSplitInfo,
 		index: splitIndex,
 		state: splitState,
-		time: {
-			realTime: timerRep.value.milliseconds,
-			gameTime: timerRep.value.milliseconds,
-		},
+		time: timerRep.value.milliseconds,
 		delta: normalisedTime,
 		splitTime: splitTime,
 	};
@@ -186,7 +191,7 @@ function calcSplitTime(splitIndex: number) {
 		return timerRep.value.milliseconds;
 	}
 
-	return timerRep.value.milliseconds - (splitsRep.value[splitIndex - 1].time?.realTime ?? -timerRep.value.milliseconds);
+	return timerRep.value.milliseconds - (splitsRep.value[splitIndex - 1].time ?? -timerRep.value.milliseconds);
 }
 
 function timeStrToMS(time: string) {
@@ -219,26 +224,49 @@ function parseSplitsFile(fileLocation: string) {
 
 		// Get all split times
 		splitsArr = lssFile.Run.Segments[0].Segment.map((segment: Record<any, any>, i: number) => {
+			const segmentHistory: number[] = segment.SegmentHistory[0].Time.map((time: any) => {
+				return timeStrToMS(time[timeComparison][0]);
+			});
+
 			const split: Split = {
 				index: i,
-				bestRun: {
-					// gameTime: timeStrToMS(segment.SplitTimes[0]?.SplitTime[0]?.GameTime[0]),,
-					realTime: timeStrToMS(segment.SplitTimes[0]?.SplitTime[0]?.RealTime[0]),
-				},
-				bestSplit: {
+				bestRun: timeStrToMS(segment.SplitTimes[0]?.SplitTime[0][timeComparison][0]),
+					// gameTime: timeStrToMS(segment.SplitTimes[0]?.SplitTime[0]?.GameTime[0]),
+				bestSplit: timeStrToMS(segment.BestSegmentTime[0][timeComparison][0]),
 					// gameTime: timeStrToMS(segment.BestSegmentTime[0]?.GameTime[0]),
-					realTime: timeStrToMS(segment.BestSegmentTime[0]?.RealTime[0]),
-				}
+				splitHistory: segmentHistory
 			}
 			return split;
+		});
+
+		// Get attempt history
+		const previousRuns: PreviousRun[] = lssFile.Run.AttemptHistory[0].Attempt.map((attempt: Record<any, any>) => {
+			let finished = false;
+			const startTime = new Date(attempt['$']['started']);
+			const endTime = new Date(attempt['$']['ended']);
+			let time = endTime.getTime() - startTime.getTime();
+			
+			if (timeComparison in attempt) {
+				finished = true;
+				time = timeStrToMS(attempt[timeComparison][0]);
+			}
+
+			return {
+				start: new Date(attempt['$']['started']),
+				end: new Date(attempt['$']['ended']),
+				time: time,
+				finished: finished
+			} as PreviousRun
 		});
 		
 		// Get run info
 		runMetadataRep.value = {
 			attempts: lssFile.Run.AttemptCount[0],
 			category: lssFile.Run.CategoryName,
-			pb: splitsArr[splitsArr.length - 1].bestRun?.realTime,
-			sumOfBest: splitsArr.reduce((a, b) => a + (b.bestSplit?.realTime ?? 0), 0)
+			pb: splitsArr[splitsArr.length - 1].bestRun,
+			sumOfBest: splitsArr.reduce((a, b) => a + (b.bestSplit ?? 0), 0),
+			previousRuns: previousRuns,
+			successfulAttempts: previousRuns.reduce((a, b) => b.finished ? a + 1 : a, 0)
 		}
 
 		splitsRep.value = splitsArr;
@@ -252,6 +280,7 @@ function resetSplits() {
 			index: split.index,
 			bestRun: split.bestRun,
 			bestSplit: split.bestSplit,
+			splitHistory: split.splitHistory
 		}
 	});
 

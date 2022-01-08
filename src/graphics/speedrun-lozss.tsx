@@ -2,13 +2,11 @@ import React from 'react';
 import { render } from 'react-dom';
 import styled from 'styled-components';
 
-import { MaSLiveSplit } from './components/livesplit/mas-livesplit';
-import { MaSMeta } from './components/livesplit/mas-meta';
-import { ChatBox } from './components/chat-box';
-import { SplitsBar } from './components/livesplit/splits-bar';
+import { LoZSSMeta } from './components/livesplit/lozss-meta';
+import { LoZSSLiveSplit } from './components/livesplit/lozss-livesplit';
 
 const SpeedrunContainer = styled.div`
-	background: #ffffff;
+	/* background: #000000; */
 	width: 1920px;
 	height: 1080px;
 `;
@@ -20,18 +18,6 @@ const FullBorder = styled.div`
 	width: 1918px; // Border
 	height: 1078px;
 	pointer-events: none;
-`;
-
-const SocialName = styled.span`
-	display: flex;
-	align-items: center;
-	margin: 0 70px;
-	font-size: 25px;
-	color: #000000;
-`;
-const SocailImg = styled.img`
-	margin-right: 30px;
-	height: 39px;
 `;
 
 const HorizontalCentre = styled.div`
@@ -51,14 +37,14 @@ const Vertical = styled.div`
 `;
 
 const WebcamBox = styled.div`
-	height: 454px;
+	min-height: 454px;
 	width: 100%;
-	border-bottom: 1px #000000 solid;
+	border-bottom: 1px #ac4414 solid;
 `;
 
 const MainGameplay = styled.div`
-	border-left: 1px #000000 solid;
-	border-bottom: 1px #000000 solid;
+	border-left: 1px #ac4414 solid;
+	border-bottom: 1px #ac4414 solid;
 	position: absolute;
 	width: 1508px;
 	height: 849px;
@@ -75,32 +61,29 @@ const BottomSegment = styled.div`
 
 const BGImage = styled.img`
 	position: absolute;
-	top: 55px;
+	z-index: -1;
+	top: 0;
 	left: 0;
-	opacity: 0.5;
 `;
+
+const LoZChatBox = styled.video``;
 
 export const Speedrun: React.FC = () => {
 	return (
 		<SpeedrunContainer>
-			<BGImage src={require('./assets/mas-greeble.png')} />
+			<BGImage src={require('./assets/LoZSSBG.png')} />
 			<HorizontalCentre>
 				<Vertical>
 					<WebcamBox />
-					<SocialName>
-						<SocailImg src={require('./assets/social/Twitter_col.svg')} />
-						CLUBWHOM
-					</SocialName>
-					<ChatBox style={{ width: '100%', height: 210 }} />
-					<MaSMeta />
+					<LoZChatBox playsInline muted autoPlay loop>
+						<source src={require('./assets/LoZSSChat.webm')} />
+					</LoZChatBox>
+					<LoZSSMeta />
 				</Vertical>
 				<MainGameplay />
 			</HorizontalCentre>
 			<BottomSegment>
-				<MaSLiveSplit />
-				<div style={{position: 'absolute', width: '100%', zIndex: 10}}>
-					{/* <SplitsBar /> */}
-				</div>
+				<LoZSSLiveSplit />
 			</BottomSegment>
 			<FullBorder />
 		</SpeedrunContainer>

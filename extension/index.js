@@ -13,6 +13,7 @@ module.exports = (nodecg) => {
     });
 };
 async function init() {
+    require('./twitch-auth');
     require('./twitch');
     require('./livesplit');
 }

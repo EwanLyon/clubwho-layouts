@@ -2,12 +2,12 @@ import React from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { Split as ISplit } from '../../../types/livesplit';
 
-const MaSSplitContainer = styled.div`
-	font-family: Tokyo2020;
+const HBSplitContainer = styled.div`
+	font-family: Sansation;
 	padding-left: 20px;
 	box-sizing: border-box;
 	height: ${(props: SplitStyles) => (props.current ? '90%' : '75%')};
-	min-width: ${(props: SplitStyles) => (props.current ? '118px' : '90px')};
+	min-width: ${(props: SplitStyles) => (props.current ? '140px' : '127px')};
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
@@ -18,7 +18,7 @@ const MaSSplitContainer = styled.div`
 	margin: 0 ${(props: SplitStyles) => (props.current ? 30 : 10)}px;
 
 	& > span {
-		font-size: ${(props: SplitStyles) => (props.current ? 25 : 15)}px;
+		font-size: ${(props: SplitStyles) => (props.current ? 25 : 20)}px;
 	}
 `;
 
@@ -29,16 +29,16 @@ const EventImg = styled.img`
 `;
 
 const SplitName = styled.span`
-	color: #000000;
+	color: #ffffff;
 	white-space: nowrap;
 `;
 
 const SplitTime = styled.span`
-	color: #000000;
+	color: #ffffff;
 `;
 
 const DeltaTime = styled.span`
-	color: #000000;
+	color: #ffffff;
 	${(props: SplitStyles) => props.best && RainbowMixin}
 	font-weight: lighter;
 `;
@@ -91,7 +91,7 @@ function msToTimeStr(ms: number): string {
 	}
 }
 
-export const MaSSplit: React.FC<Props> = (props: Props) => {
+export const HBSplit: React.FC<Props> = (props: Props) => {
 	let deltaColour = '#000000';
 
 	if (props.split) {
@@ -130,20 +130,20 @@ export const MaSSplit: React.FC<Props> = (props: Props) => {
 	}
 
 	return (
-		<MaSSplitContainer
+		<HBSplitContainer
 			id={props.id}
 			img={props.eventImg}
 			current={props.current}
-			shadowCol={deltaColour === '#000000' ? undefined : deltaColour}
+			shadowCol={deltaColour === '#ffffff' ? undefined : deltaColour}
 			best={props.split?.state === 'best'}
 			old={Boolean(deltaTime)}
 		>
 			<EventImg src={props.eventImg} />
 			<SplitName>{props.name}</SplitName>
 			<SplitTime>{splitTime}</SplitTime>
-			<DeltaTime best={props.split?.state === 'best'} style={{ color: deltaColour !== '#000000' ? deltaColour : '' }}>
+			<DeltaTime best={props.split?.state === 'best'} style={{ color: deltaColour !== '#ffffff' ? deltaColour : '' }}>
 				{deltaTime}
 			</DeltaTime>
-		</MaSSplitContainer>
+		</HBSplitContainer>
 	);
 };

@@ -12,7 +12,8 @@ gsap.registerPlugin(ScrollToPlugin);
 
 const MaSLiveSplitContainer = styled.div`
 	display: flex;
-	height: 90%;
+	height: 100%;
+	padding: 5% 0;
 	width: 1920px;
 	position: relative;
 `;
@@ -92,40 +93,40 @@ function msToTimeStr(ms: number): string {
 
 // 34 events
 const masSplits = [
-	{ name: '100m', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
-	{ name: '110m Hurdles', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
-	{ name: '4x 100m Relay', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
-	{ name: 'Javelin Throw', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: 'Volleyball', img: '../shared/split-images/mariosonicolympics/picto-1964-volleyball.svg' },
+	{ name: 'Judo', img: '../shared/split-images/mariosonicolympics/picto-1964-judo.svg' },
+	{ name: '10m Platform', img: '../shared/split-images/mariosonicolympics/picto-1964-swim.svg' },
+	{ name: '100m', img: '../shared/split-images/mariosonicolympics/picto-1964-aths.svg' },
+	{ name: '400m Hurdles', img: '../shared/split-images/mariosonicolympics/picto-1964-aths.svg' },
+	{ name: 'Vault', img: '../shared/split-images/mariosonicolympics/picto-1964-gym.svg' },
+	{ name: 'Shooting', img: '../shared/split-images/mariosonicolympics/picto-1964-shooting.svg' },
+	{ name: 'Kayak', img: '../shared/split-images/mariosonicolympics/picto-1964-kayak.svg' },
+	{ name: 'Long Jump', img: '../shared/split-images/mariosonicolympics/picto-1964-aths.svg' },
+	{ name: 'Marathon', img: '../shared/split-images/mariosonicolympics/picto-1964-aths.svg' },
 	{ name: 'Dream Racing', img: '../shared/split-images/mariosonicolympics/picto-dream-racing.svg' },
-	{ name: 'Dream Shooting', img: '../shared/split-images/mariosonicolympics/picto-dream-shooting.svg' },
-	{ name: 'Surfing', img: '../shared/split-images/mariosonicolympics/picto-srf.svg' },
-	{ name: 'Sport Climbing', img: '../shared/split-images/mariosonicolympics/picto-clb.svg' },
-	{ name: 'Discus Throw', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: 'Javelin Throw', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: '4x 100m Relay', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: '110m Hurdles', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: '100m', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
 	{ name: 'Triple Jump', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
-	{ name: 'Skateboarding', img: '../shared/split-images/mariosonicolympics/picto-skb.svg' },
-	{ name: 'Boxing', img: '../shared/split-images/mariosonicolympics/picto-box.svg' },
-	{ name: 'Karate', img: '../shared/split-images/mariosonicolympics/picto-kte.svg' },
-	{ name: 'Football', img: '../shared/split-images/mariosonicolympics/picto-fbl.svg' },
+	{ name: 'Discus Throw', img: '../shared/split-images/mariosonicolympics/picto-ath.svg' },
+	{ name: 'Sport Climbing', img: '../shared/split-images/mariosonicolympics/picto-clb.svg' },
+	{ name: 'Surfing', img: '../shared/split-images/mariosonicolympics/picto-srf.svg' },
+	{ name: 'Dream Shooting', img: '../shared/split-images/mariosonicolympics/picto-dream-shooting.svg' },
 	{ name: 'Dream Karate', img: '../shared/split-images/mariosonicolympics/picto-dream-karate.svg' },
-	{ name: 'Equestrian', img: '../shared/split-images/mariosonicolympics/picto-equ.svg' },
-	{ name: 'Gymnastics', img: '../shared/split-images/mariosonicolympics/picto-gar.svg' },
-	{ name: 'Swimming', img: '../shared/split-images/mariosonicolympics/picto-swm.svg' },
-	{ name: 'Canoe', img: '../shared/split-images/mariosonicolympics/picto-csp.svg' },
+	{ name: 'Football', img: '../shared/split-images/mariosonicolympics/picto-fbl.svg' },
+	{ name: 'Karate', img: '../shared/split-images/mariosonicolympics/picto-kte.svg' },
+	{ name: 'Boxing', img: '../shared/split-images/mariosonicolympics/picto-box.svg' },
+	{ name: 'Skateboarding', img: '../shared/split-images/mariosonicolympics/picto-skb.svg' },
 	{ name: 'Rugby Sevens', img: '../shared/split-images/mariosonicolympics/picto-rug.svg' },
-	{ name: 'Badminton', img: '../shared/split-images/mariosonicolympics/picto-bdm.svg' },
-	{ name: 'Table Tennis', img: '../shared/split-images/mariosonicolympics/picto-tte.svg' },
-	{ name: 'Fencing', img: '../shared/split-images/mariosonicolympics/picto-fen.svg' },
+	{ name: 'Canoe', img: '../shared/split-images/mariosonicolympics/picto-csp.svg' },
+	{ name: 'Swimming', img: '../shared/split-images/mariosonicolympics/picto-swm.svg' },
+	{ name: 'Gymnastics', img: '../shared/split-images/mariosonicolympics/picto-gar.svg' },
+	{ name: 'Equestrian', img: '../shared/split-images/mariosonicolympics/picto-equ.svg' },
 	{ name: 'Archery', img: '../shared/split-images/mariosonicolympics/picto-arc.svg' },
-	{ name: '1964 Judo', img: '../shared/split-images/mariosonicolympics/picto-1964-judo.svg' },
-	{ name: '1964 10m Platform', img: '../shared/split-images/mariosonicolympics/picto-1964-swim.svg' },
-	{ name: '1964 100m', img: '../shared/split-images/mariosonicolympics/picto-1964-aths.svg' },
-	{ name: '1964 400m Hurdles', img: '../shared/split-images/mariosonicolympics/picto-1964-aths.svg' },
-	{ name: '1964 Vault', img: '../shared/split-images/mariosonicolympics/picto-1964-gym.svg' },
-	{ name: '1964 Volleyball', img: '../shared/split-images/mariosonicolympics/picto-1964-volleyball.svg' },
-	{ name: '1964 Shooting', img: '../shared/split-images/mariosonicolympics/picto-1964-shooting.svg' },
-	{ name: '1964 Kayak', img: '../shared/split-images/mariosonicolympics/picto-1964-kayak.svg' },
-	{ name: '1964 Long Jump', img: '../shared/split-images/mariosonicolympics/picto-1964-aths.svg' },
-	{ name: '1964 Marathon', img: '../shared/split-images/mariosonicolympics/picto-1964-aths.svg' },
+	{ name: 'Fencing', img: '../shared/split-images/mariosonicolympics/picto-fen.svg' },
+	{ name: 'Table Tennis', img: '../shared/split-images/mariosonicolympics/picto-tte.svg' },
+	{ name: 'Badminton', img: '../shared/split-images/mariosonicolympics/picto-bdm.svg' },
 ];
 
 export const MaSLiveSplit: React.FC<Props> = (props: Props) => {
@@ -151,12 +152,12 @@ export const MaSLiveSplit: React.FC<Props> = (props: Props) => {
 			const currentSplitValue = splitsRep[currentSplitRep];
 			// If split time is above the best split time display the delta live
 			if (
-				currentSplitValue?.bestRun?.realTime &&
-				currentSplitValue?.bestSplit?.realTime &&
-				(currentSplitValue.bestSplit.realTime < timerRep.splitMilliseconds ||
-					timerRep.milliseconds > currentSplitValue?.bestRun?.realTime)
+				currentSplitValue?.bestRun &&
+				currentSplitValue?.bestSplit &&
+				(currentSplitValue.bestSplit < timerRep.splitMilliseconds ||
+					timerRep.milliseconds > currentSplitValue?.bestRun)
 			) {
-				const timeDiff = timerRep.milliseconds - currentSplitValue.bestRun.realTime;
+				const timeDiff = timerRep.milliseconds - currentSplitValue.bestRun;
 				liveDelta = `${msToTimeStr(Math.abs(timeDiff))}.${Math.floor((Math.abs(timeDiff) % 1000) / 100)}`;
 				liveDelta = timeDiff < 0 ? `-${liveDelta}` : `+${liveDelta}`;
 			}

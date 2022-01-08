@@ -11,9 +11,8 @@ const PIPE_NAME = 'LiveSplit';
 const PIPE_PATH = '\\\\.\\pipe\\';
 const client = net.connect(PIPE_PATH + PIPE_NAME);
 const Events = ["start", "split", "pause", "reset", "resume", "scroll_down", "scroll_up", "skip_split", "switch_comparison_next", "switch_comparison_previous", "undo_all_pauses", "undo_split"];
-// const timeComparison = 'RealTime';
+const timeComparison = 'RealTime';
 // NodeCG Reps
-// const stateRep = nodecg.Replicant('livesplit:state', {persistent: false});
 const splitsRep = nodecg.Replicant('livesplit:splitIndex', { defaultValue: [], persistent: false });
 const currentSplitRep = nodecg.Replicant('livesplit:currentSplit', { defaultValue: 0, persistent: false });
 const splitsFileLocRep = nodecg.Replicant('livesplit:splitsFileLocations', { defaultValue: '' });
@@ -53,6 +52,7 @@ client.on('data', (data) => {
     nodecg.log.info(`[LiveSplit] Command/Data: ${dataStr}`);
     // LiveSplit event
     if (Events.includes(dataStr) || dataStr.startsWith("reset") || dataStr.startsWith("split")) {
+        // Reset
         if (dataStr.startsWith("reset")) {
             nodecg.sendMessage('livesplit:reset', dataStr.split(' ')[1]);
             currentSplitRep.value = 0;
@@ -63,6 +63,7 @@ client.on('data', (data) => {
             timerRep.value.splitMilliseconds = 0;
             return;
         }
+        // Split
         if (dataStr.startsWith("split") || dataStr === 'skip_split') {
             currentSplitRep.value++;
             if (dataStr.split(' ').length > 1) {
@@ -70,8 +71,10 @@ client.on('data', (data) => {
                     splitsRep.value[currentSplitRep.value - 1] = split;
                 });
             }
+            // Finish!
             if (currentSplitRep.value >= splitsRep.value.length) {
                 timerRep.value.state = 'Ended';
+                runMetadataRep.value.successfulAttempts++;
                 timer.split();
             }
         }
@@ -81,6 +84,7 @@ client.on('data', (data) => {
                 timer.initializeGameTime();
                 timer.start();
                 timerRep.value.state = 'Running';
+                runMetadataRep.value.attempts++;
                 break;
             case 'pause':
                 timerRep.value.state = 'Paused';
@@ -104,6 +108,9 @@ client.on('data', (data) => {
 client.on('end', () => {
     nodecg.log.info('[LiveSplit] Disconnected');
 });
+client.on('error', (err) => {
+    nodecg.log.error('[LiveSplit] Connection error: ' + err.message);
+});
 // @ts-ignore
 function sendLivesplitCommand(cmd) {
     client.write(`${cmd}\r\n`);
@@ -117,7 +124,7 @@ async function getLivesplitData(cmd) {
     });
 }
 async function getSplitInformation(splitIndex) {
-    var _a, _b, _c, _d;
+    var _a, _b;
     const currentSplitInfo = splitsRep.value[splitIndex];
     const delta = await getLivesplitData('getdelta');
     const normalisedTime = delta.replace('+', '').replace('−', '-');
@@ -133,20 +140,17 @@ async function getSplitInformation(splitIndex) {
         splitState = currentDelta < previousDelta ? 'behindGaining' : 'behindLosing';
     }
     const splitTime = calcSplitTime(splitIndex);
-    if (((_c = currentSplitInfo.bestSplit) === null || _c === void 0 ? void 0 : _c.realTime) && splitTime < ((_d = currentSplitInfo.bestSplit) === null || _d === void 0 ? void 0 : _d.realTime)) {
+    if (currentSplitInfo.bestSplit && splitTime < currentSplitInfo.bestSplit) {
         splitState = 'best';
     }
-    return Object.assign(Object.assign({}, currentSplitInfo), { index: splitIndex, state: splitState, time: {
-            realTime: timerRep.value.milliseconds,
-            gameTime: timerRep.value.milliseconds,
-        }, delta: normalisedTime, splitTime: splitTime });
+    return Object.assign(Object.assign({}, currentSplitInfo), { index: splitIndex, state: splitState, time: timerRep.value.milliseconds, delta: normalisedTime, splitTime: splitTime });
 }
 function calcSplitTime(splitIndex) {
-    var _a, _b;
+    var _a;
     if (splitIndex === 0) {
         return timerRep.value.milliseconds;
     }
-    return timerRep.value.milliseconds - ((_b = (_a = splitsRep.value[splitIndex - 1].time) === null || _a === void 0 ? void 0 : _a.realTime) !== null && _b !== void 0 ? _b : -timerRep.value.milliseconds);
+    return timerRep.value.milliseconds - ((_a = splitsRep.value[splitIndex - 1].time) !== null && _a !== void 0 ? _a : -timerRep.value.milliseconds);
 }
 function timeStrToMS(time) {
     const ts = time.split(':');
@@ -170,33 +174,51 @@ function parseSplitsFile(fileLocation) {
     splitsFileLocRep.value = fileLocation;
     let splitsArr = [];
     xml2js_1.parseString(fs_1.default.readFileSync(fileLocation).toString(), (err, lssFile) => {
-        var _a;
         if (err) {
             nodecg.log.error('[LiveSplit] Error reading splits file: ' + err.message);
             return;
         }
         // Get all split times
         splitsArr = lssFile.Run.Segments[0].Segment.map((segment, i) => {
-            var _a, _b, _c;
+            var _a;
+            const segmentHistory = segment.SegmentHistory[0].Time.map((time) => {
+                return timeStrToMS(time[timeComparison][0]);
+            });
             const split = {
                 index: i,
-                bestRun: {
-                    // gameTime: timeStrToMS(segment.SplitTimes[0]?.SplitTime[0]?.GameTime[0]),,
-                    realTime: timeStrToMS((_b = (_a = segment.SplitTimes[0]) === null || _a === void 0 ? void 0 : _a.SplitTime[0]) === null || _b === void 0 ? void 0 : _b.RealTime[0]),
-                },
-                bestSplit: {
-                    // gameTime: timeStrToMS(segment.BestSegmentTime[0]?.GameTime[0]),
-                    realTime: timeStrToMS((_c = segment.BestSegmentTime[0]) === null || _c === void 0 ? void 0 : _c.RealTime[0]),
-                }
+                bestRun: timeStrToMS((_a = segment.SplitTimes[0]) === null || _a === void 0 ? void 0 : _a.SplitTime[0][timeComparison][0]),
+                // gameTime: timeStrToMS(segment.SplitTimes[0]?.SplitTime[0]?.GameTime[0]),
+                bestSplit: timeStrToMS(segment.BestSegmentTime[0][timeComparison][0]),
+                // gameTime: timeStrToMS(segment.BestSegmentTime[0]?.GameTime[0]),
+                splitHistory: segmentHistory
             };
             return split;
+        });
+        // Get attempt history
+        const previousRuns = lssFile.Run.AttemptHistory[0].Attempt.map((attempt) => {
+            let finished = false;
+            const startTime = new Date(attempt['$']['started']);
+            const endTime = new Date(attempt['$']['ended']);
+            let time = endTime.getTime() - startTime.getTime();
+            if (timeComparison in attempt) {
+                finished = true;
+                time = timeStrToMS(attempt[timeComparison][0]);
+            }
+            return {
+                start: new Date(attempt['$']['started']),
+                end: new Date(attempt['$']['ended']),
+                time: time,
+                finished: finished
+            };
         });
         // Get run info
         runMetadataRep.value = {
             attempts: lssFile.Run.AttemptCount[0],
             category: lssFile.Run.CategoryName,
-            pb: (_a = splitsArr[splitsArr.length - 1].bestRun) === null || _a === void 0 ? void 0 : _a.realTime,
-            sumOfBest: splitsArr.reduce((a, b) => { var _a, _b; return a + ((_b = (_a = b.bestSplit) === null || _a === void 0 ? void 0 : _a.realTime) !== null && _b !== void 0 ? _b : 0); }, 0)
+            pb: splitsArr[splitsArr.length - 1].bestRun,
+            sumOfBest: splitsArr.reduce((a, b) => { var _a; return a + ((_a = b.bestSplit) !== null && _a !== void 0 ? _a : 0); }, 0),
+            previousRuns: previousRuns,
+            successfulAttempts: previousRuns.reduce((a, b) => b.finished ? a + 1 : a, 0)
         };
         splitsRep.value = splitsArr;
         nodecg.log.info(`[LiveSplit] Parsing ${fileLocation} successful!`);
@@ -208,6 +230,7 @@ function resetSplits() {
             index: split.index,
             bestRun: split.bestRun,
             bestSplit: split.bestSplit,
+            splitHistory: split.splitHistory
         };
     });
     splitsRep.value = newSplits;

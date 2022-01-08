@@ -12,6 +12,7 @@ module.exports = (nodecg: any) => {
 };
 
 async function init() {
+	require('./twitch-auth');
 	require('./twitch');
 	require('./livesplit');
 };

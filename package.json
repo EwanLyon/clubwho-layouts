@@ -69,11 +69,6 @@
         "height": 1080
       },
       {
-        "file": "speedrun-new.html",
-        "width": 1920,
-        "height": 1080
-      },
-      {
         "file": "widescreen-normal.html",
         "width": 1920,
         "height": 1080
@@ -84,12 +79,22 @@
         "height": 1080
       },
       {
-        "file": "speedrun.html",
+        "file": "speedrun-portal.html",
         "width": 1920,
         "height": 1080
       },
       {
         "file": "speedrun-mas.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "speedrun-lozss.html",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "file": "speedrun-hb.html",
         "width": 1920,
         "height": 1080
       },
@@ -103,6 +108,10 @@
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/styles": "^4.11.3",
+    "@twurple/api": "^5.0.13",
+    "@twurple/auth": "^5.0.13",
+    "@twurple/chat": "^5.0.13",
+    "@twurple/eventsub-ngrok": "^5.0.13",
     "gsap": "^3.6.0",
     "livesplit-core": "^0.10.2",
     "nodecg": "^1.8.1",
@@ -133,7 +142,7 @@
     "@types/styled-components": "^5.1.7",
     "@types/xml2js": "^0.4.9",
     "less": "^4.1.1",
-    "parcel-bundler": "^1.12.4",
+    "parcel-bundler": "^1.12.5",
     "sass": "^1.32.7",
     "trash-cli": "^4.0.0",
     "typescript": "^4.1.5"

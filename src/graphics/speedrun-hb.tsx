@@ -2,13 +2,14 @@ import React from 'react';
 import { render } from 'react-dom';
 import styled from 'styled-components';
 
-import { MaSLiveSplit } from './components/livesplit/mas-livesplit';
-import { MaSMeta } from './components/livesplit/mas-meta';
+import { HBLiveSplit } from './components/livesplit/hb-livesplit';
+import { HBMeta } from './components/livesplit/hb-meta';
 import { ChatBox } from './components/chat-box';
 import { SplitsBar } from './components/livesplit/splits-bar';
+import { TwitchChat } from './components/twitch-chat';
 
 const SpeedrunContainer = styled.div`
-	background: #ffffff;
+	background: #000000;
 	width: 1920px;
 	height: 1080px;
 `;
@@ -27,7 +28,7 @@ const SocialName = styled.span`
 	align-items: center;
 	margin: 0 70px;
 	font-size: 25px;
-	color: #000000;
+	color: #ffffff;
 `;
 const SocailImg = styled.img`
 	margin-right: 30px;
@@ -53,12 +54,12 @@ const Vertical = styled.div`
 const WebcamBox = styled.div`
 	height: 454px;
 	width: 100%;
-	border-bottom: 1px #000000 solid;
+	border-bottom: 1px #ffffff solid;
 `;
 
 const MainGameplay = styled.div`
-	border-left: 1px #000000 solid;
-	border-bottom: 1px #000000 solid;
+	border-left: 1px #ffffff solid;
+	border-bottom: 1px #ffffff solid;
 	position: absolute;
 	width: 1508px;
 	height: 849px;
@@ -73,17 +74,10 @@ const BottomSegment = styled.div`
 	align-items: center;
 `;
 
-const BGImage = styled.img`
-	position: absolute;
-	top: 55px;
-	left: 0;
-	opacity: 0.5;
-`;
 
 export const Speedrun: React.FC = () => {
 	return (
 		<SpeedrunContainer>
-			<BGImage src={require('./assets/mas-greeble.png')} />
 			<HorizontalCentre>
 				<Vertical>
 					<WebcamBox />
@@ -91,13 +85,13 @@ export const Speedrun: React.FC = () => {
 						<SocailImg src={require('./assets/social/Twitter_col.svg')} />
 						CLUBWHOM
 					</SocialName>
-					<ChatBox style={{ width: '100%', height: 210 }} />
-					<MaSMeta />
+					<TwitchChat style={{ width: '100%', height: 210 }} />
+					<HBMeta />
 				</Vertical>
 				<MainGameplay />
 			</HorizontalCentre>
 			<BottomSegment>
-				<MaSLiveSplit />
+				<HBLiveSplit />
 				<div style={{position: 'absolute', width: '100%', zIndex: 10}}>
 					{/* <SplitsBar /> */}
 				</div>
