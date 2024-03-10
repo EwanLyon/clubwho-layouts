@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { render } from 'react-dom';
 // import styled from 'styled-components';
 
-import { TextField, Button, ThemeProvider } from '@material-ui/core';
+import { TextField, Button, ThemeProvider } from '@mui/material';
 import theme from './dashboard-style';
 
 export const LiveSplit: React.FC = () => {

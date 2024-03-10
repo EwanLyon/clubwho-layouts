@@ -1,21 +1,17 @@
-import * as React from 'react';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import {} from '../../../../../../types/browser';
+import * as React from "react";
+import { Checkbox, FormControlLabel, Button, ButtonGroup } from "@mui/material";
 
 export class Spotify extends React.Component {
 	toggleSpotify(event: React.ChangeEvent<HTMLInputElement>) {
-		nodecg.sendMessage('changeSpotifyPersistent', event.target.checked);
+		nodecg.sendMessage("changeSpotifyPersistent", event.target.checked);
 	}
 
 	showSpotify() {
-		nodecg.sendMessage('spotifyManual', true);
+		nodecg.sendMessage("spotifyManual", true);
 	}
 
 	hideSpotify() {
-		nodecg.sendMessage('spotifyManual', false);
+		nodecg.sendMessage("spotifyManual", false);
 	}
 
 	render() {
@@ -24,7 +20,7 @@ export class Spotify extends React.Component {
 				<FormControlLabel
 					label="Spotify Persistent"
 					labelPlacement="start"
-					control={<Checkbox onChange={e => this.toggleSpotify(e)} />}
+					control={<Checkbox onChange={(e) => this.toggleSpotify(e)} />}
 				/>
 				<span>Spotify Buttons</span>
 				<ButtonGroup>

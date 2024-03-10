@@ -1,6 +1,5 @@
-import * as React from 'react';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
+import * as React from "react";
+import { Button, TextField } from "@mui/material";
 
 interface Props {}
 interface State {
@@ -11,7 +10,7 @@ interface State {
 export class SpotifyTest extends React.Component<Props, State> {
 	constructor(props: Props) {
 		super(props);
-		this.state = { name: 'Divinity', artist: 'Porter Robinson' };
+		this.state = { name: "Divinity", artist: "Porter Robinson" };
 		this.nameChange = this.nameChange.bind(this);
 		this.artistChange = this.artistChange.bind(this);
 		this.testSong = this.testSong.bind(this);
@@ -26,9 +25,9 @@ export class SpotifyTest extends React.Component<Props, State> {
 	}
 
 	testSong() {
-		nodecg.sendMessage('newSong', {
+		nodecg.sendMessage("newSong", {
 			name: this.state.name,
-			artist: this.state.artist
+			artist: this.state.artist,
 		});
 	}
 
@@ -36,19 +35,11 @@ export class SpotifyTest extends React.Component<Props, State> {
 		return (
 			<fieldset>
 				<legend>Spotify</legend>
-				<TextField
-					label="Song"
-					value={this.state.name}
-					onChange={this.nameChange}
-					variant="filled"
-				/>
-				<TextField
-					label="Artist"
-					value={this.state.artist}
-					onChange={this.artistChange}
-					variant="filled"
-				/>
-				<Button variant="contained" onClick={this.testSong}>Spotify</Button>
+				<TextField label="Song" value={this.state.name} onChange={this.nameChange} variant="filled" />
+				<TextField label="Artist" value={this.state.artist} onChange={this.artistChange} variant="filled" />
+				<Button variant="contained" onClick={this.testSong}>
+					Spotify
+				</Button>
 			</fieldset>
 		);
 	}

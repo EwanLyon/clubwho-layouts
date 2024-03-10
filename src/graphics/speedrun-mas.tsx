@@ -1,11 +1,11 @@
-import React from 'react';
-import { render } from 'react-dom';
-import styled from 'styled-components';
+import React from "react";
+import { createRoot } from "react-dom/client";
+import styled from "styled-components";
 
-import { MaSLiveSplit } from './components/livesplit/mas-livesplit';
-import { MaSMeta } from './components/livesplit/mas-meta';
-import { ChatBox } from './components/chat-box';
-import { SplitsBar } from './components/livesplit/splits-bar';
+import { MaSLiveSplit } from "./components/livesplit/mas-livesplit";
+import { MaSMeta } from "./components/livesplit/mas-meta";
+import { ChatBox } from "./components/chat-box";
+import { SplitsBar } from "./components/livesplit/splits-bar";
 
 const SpeedrunContainer = styled.div`
 	background: #ffffff;
@@ -83,28 +83,26 @@ const BGImage = styled.img`
 export const Speedrun: React.FC = () => {
 	return (
 		<SpeedrunContainer>
-			<BGImage src={require('./assets/mas-greeble.png')} />
+			<BGImage src={require("./assets/mas-greeble.png")} />
 			<HorizontalCentre>
 				<Vertical>
 					<WebcamBox />
 					<SocialName>
-						<SocailImg src={require('./assets/social/Twitter_col.svg')} />
+						<SocailImg src={require("./assets/social/Twitter_col.svg")} />
 						CLUBWHOM
 					</SocialName>
-					<ChatBox style={{ width: '100%', height: 210 }} />
+					<ChatBox style={{ width: "100%", height: 210 }} />
 					<MaSMeta />
 				</Vertical>
 				<MainGameplay />
 			</HorizontalCentre>
 			<BottomSegment>
 				<MaSLiveSplit />
-				<div style={{position: 'absolute', width: '100%', zIndex: 10}}>
-					{/* <SplitsBar /> */}
-				</div>
+				<div style={{ position: "absolute", width: "100%", zIndex: 10 }}>{/* <SplitsBar /> */}</div>
 			</BottomSegment>
 			<FullBorder />
 		</SpeedrunContainer>
 	);
 };
 
-render(<Speedrun />, document.getElementById('speedrun'));
+createRoot(document.getElementById("root")!).render(<Speedrun />);

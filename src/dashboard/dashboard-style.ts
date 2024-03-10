@@ -1,21 +1,9 @@
-import {createMuiTheme} from '@material-ui/core/styles'
-// import { makeStyles } from '@material-ui/styles';
-// import green from '@material-ui/core/colors/green';
-// import red from '@material-ui/core/colors/red';
+import { createTheme } from "@mui/material/styles";
 
-// const useStyles = makeStyles({
-// 	greenButton: {
-// 		background: green[300]
-// 	},
-// 	redButton: {
-// 		background: red[300]
-// 	}
-// });
-
-const dashboardTheme = createMuiTheme({
+const dashboardTheme = createTheme({
 	palette: {
-		type: 'dark'
-	}
+		mode: "dark",
+	},
 });
 
-export default dashboardTheme
+export default dashboardTheme;

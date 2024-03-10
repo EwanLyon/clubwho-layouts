@@ -1,20 +1,9 @@
 {
   "name": "clubwho-layouts",
-  "version": "1.0.0",
-  "description": "A bare layout for TS",
-  "files": [
-    "dashboard",
-    "graphics",
-    "extension.js",
-    "extension"
-  ],
-  "keywords": [
-    "",
-    "nodecg-bundle"
-  ],
+  "version": "2.0.0",
+  "description": "Clubwho's basic layouts for his streams",
   "nodecg": {
-    "compatibleRange": "^1.7.0",
-    "transformBareModuleSpecifiers": true,
+    "compatibleRange": "^2",
     "soundCues": [
       {
         "name": "follower",
@@ -106,45 +95,50 @@
     ]
   },
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
-    "@material-ui/styles": "^4.11.3",
-    "@twurple/api": "^5.0.13",
-    "@twurple/auth": "^5.0.13",
-    "@twurple/chat": "^5.0.13",
-    "@twurple/eventsub-ngrok": "^5.0.13",
-    "gsap": "^3.6.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.15.12",
+    "@nodecg/react-hooks": "^1.0.1",
+    "@nodecg/types": "^2.1.12",
+    "@tsparticles/engine": "^3.3.0",
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.3.0",
+    "@twurple/api": "^7.0.10",
+    "@twurple/auth": "^7.0.10",
+    "@twurple/chat": "^7.0.10",
+    "@twurple/eventsub-http": "^7.0.10",
+    "@twurple/eventsub-ngrok": "^7.0.10",
+    "gsap": "^3.12.5",
     "livesplit-core": "^0.10.2",
-    "nodecg": "^1.8.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-particles-js": "^3.4.1",
-    "react-tsparticles": "^1.32.0",
-    "styled-components": "^5.2.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "styled-components": "^6.1.8",
     "typeface-roboto": "1.1.13",
-    "use-nodecg": "^0.4.1-1",
-    "xml2js": "^0.4.23"
+    "xml2js": "^0.6.2"
   },
   "scripts": {
-    "build": "npm run schema-types && npm run build:extension && npm run build:dashboard && npm run build:graphics",
-    "build:extension": "trash extension && tsc -b ./src/extension/tsconfig.json",
-    "build:dashboard": "trash dashboard && parcel build src/dashboard/*.html --out-dir dashboard --public-url ./ --no-content-hash",
-    "build:graphics": "trash graphics && parcel build src/graphics/*.html --out-dir graphics --public-url ./ --no-content-hash",
-    "watch:graphics": "trash graphics && parcel watch src/graphics/*.html --out-dir graphics --public-url ./",
-    "watch:extension": "tsc -b tsconfig.node.json --watch",
+    "build": "run-p build:*",
+    "build:browser": "vite build",
+    "build:extension": "tsc -p tsconfig.extension.json",
+    "watch": "run-p watch:*",
+    "watch:browser": "vite",
+    "watch:extension": "tsc -p tsconfig.extension.json -w",
     "schema-types": "trash src/types/schemas && nodecg schema-types",
     "start:solo": "node ../.. --bundlesEnabled=clubwho-layouts",
     "start": "node ../.."
   },
   "devDependencies": {
     "@types/gsap": "^1.20.2",
-    "@types/react": "^17.0.2",
-    "@types/react-dom": "^17.0.1",
-    "@types/styled-components": "^5.1.7",
-    "@types/xml2js": "^0.4.9",
-    "less": "^4.1.1",
-    "parcel-bundler": "^1.12.5",
-    "sass": "^1.32.7",
-    "trash-cli": "^4.0.0",
-    "typescript": "^4.1.5"
+    "@types/react": "^18.2.64",
+    "@types/react-dom": "^18.2.21",
+    "@types/styled-components": "^5.1.34",
+    "@types/xml2js": "^0.4.14",
+    "@vitejs/plugin-react": "^4.2.1",
+    "less": "^4.2.0",
+    "sass": "^1.71.1",
+    "trash-cli": "^5.0.0",
+    "typescript": "^5.4.2",
+    "vite": "^4.5.2",
+    "vite-plugin-nodecg": "^2.0.1"
   }
 }

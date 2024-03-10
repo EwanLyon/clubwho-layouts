@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import styled from 'styled-components';
 
 import { Spotify } from './components/spotify';
@@ -90,11 +90,11 @@ export const Speedrun: React.FC = () => {
 				<MainGameplay />
 			</HorizontalCentre>
 			<BottomSegment>
-				<LiveSplit /> 
+				<LiveSplit />
 			</BottomSegment>
 			<FullBorder />
 		</SpeedrunContainer>
 	);
 };
 
-render(<Speedrun />, document.getElementById('speedrun'));
+createRoot(document.getElementById("root")!).render(<Speedrun />);

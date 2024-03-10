@@ -1,12 +1,12 @@
-import React from 'react';
-import { render } from 'react-dom';
-import styled from 'styled-components';
+import React from "react";
+import { createRoot } from "react-dom/client";
+import styled from "styled-components";
 
-import { HBLiveSplit } from './components/livesplit/hb-livesplit';
-import { HBMeta } from './components/livesplit/hb-meta';
-import { ChatBox } from './components/chat-box';
-import { SplitsBar } from './components/livesplit/splits-bar';
-import { TwitchChat } from './components/twitch-chat';
+import { HBLiveSplit } from "./components/livesplit/hb-livesplit";
+import { HBMeta } from "./components/livesplit/hb-meta";
+import { ChatBox } from "./components/chat-box";
+import { SplitsBar } from "./components/livesplit/splits-bar";
+import { TwitchChat } from "./components/twitch-chat";
 
 const SpeedrunContainer = styled.div`
 	background: #000000;
@@ -74,7 +74,6 @@ const BottomSegment = styled.div`
 	align-items: center;
 `;
 
-
 export const Speedrun: React.FC = () => {
 	return (
 		<SpeedrunContainer>
@@ -82,23 +81,21 @@ export const Speedrun: React.FC = () => {
 				<Vertical>
 					<WebcamBox />
 					<SocialName>
-						<SocailImg src={require('./assets/social/Twitter_col.svg')} />
+						<SocailImg src={require("./assets/social/Twitter_col.svg")} />
 						CLUBWHOM
 					</SocialName>
-					<div style={{minHeight: 265}} />
+					<div style={{ minHeight: 265 }} />
 					<HBMeta />
 				</Vertical>
 				<MainGameplay />
 			</HorizontalCentre>
 			<BottomSegment>
 				<HBLiveSplit />
-				<div style={{position: 'absolute', width: '100%', zIndex: 10}}>
-					{/* <SplitsBar /> */}
-				</div>
+				<div style={{ position: "absolute", width: "100%", zIndex: 10 }}>{/* <SplitsBar /> */}</div>
 			</BottomSegment>
 			<FullBorder />
 		</SpeedrunContainer>
 	);
 };
 
-render(<Speedrun />, document.getElementById('speedrun'));
+createRoot(document.getElementById("root")!).render(<Speedrun />);

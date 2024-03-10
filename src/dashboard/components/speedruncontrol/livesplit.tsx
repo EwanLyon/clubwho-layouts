@@ -1,7 +1,5 @@
-import * as React from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import {} from '../../../../../../types/browser';
+import * as React from "react";
+import { TextField, Button } from "@mui/material";
 
 interface Props {}
 interface State {
@@ -13,7 +11,7 @@ export class LiveSplit extends React.Component<Props, State> {
 		super(props);
 		this.heightChange = this.heightChange.bind(this);
 		this.updateLivesplitHeight = this.updateLivesplitHeight.bind(this);
-		this.state = { height: '644'};
+		this.state = { height: "644" };
 	}
 
 	heightChange(e: any) {
@@ -21,7 +19,7 @@ export class LiveSplit extends React.Component<Props, State> {
 	}
 
 	updateLivesplitHeight() {
-		nodecg.sendMessage('updateLivesplitHeight', parseFloat(this.state.height));
+		nodecg.sendMessage("updateLivesplitHeight", parseFloat(this.state.height));
 	}
 
 	render() {

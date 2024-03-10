@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useReplicant } from 'use-nodecg';
+import { useReplicant } from '@nodecg/react-hooks';
 
 import { RunMetadata } from '../../../types/livesplit';
 
@@ -52,7 +52,7 @@ function msToTimeStr(ms: number): string {
 
 export const HBMeta: React.FC<Props> = (_props: Props) => {
 	const [metaRep] = useReplicant<RunMetadata, RunMetadata>('livesplit:runMetadata', {attempts: 0, successfulAttempts: 0, previousRuns: []});
-	
+
 	return (
 		<HBMetaContainer>
 			<Category>{metaRep.category}</Category>

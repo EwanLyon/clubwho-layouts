@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<style>
+			body {
+				margin: 15px;
+			}
+		</style>
+		<script type="module">
+			import RefreshRuntime from "http://localhost:5173/@react-refresh";
+			RefreshRuntime.injectIntoGlobalHook(window);
+			window.$RefreshReg$ = () => {};
+			window.$RefreshSig$ = () => (type) => type;
+			window.__vite_plugin_react_preamble_installed__ = true;
+		</script>
+	</head>
+	<body>
+		<div id="root" />
+	</body>
+</html>

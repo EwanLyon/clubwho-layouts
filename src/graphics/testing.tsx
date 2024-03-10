@@ -1,17 +1,9 @@
-import * as React from 'react';
-import { render } from 'react-dom';
-import {} from '../../../../types/browser';
+import * as React from "react";
+import { createRoot } from "react-dom/client";
+import {} from "../../../../types/browser";
 
-export class Testing extends React.Component {
+const Testing = () => {
+	return <h1>Empty :(</h1>;
+};
 
-	constructor(props: Readonly<{}>) {
-		super(props);
-	}
-
-
-	render() {
-		return <h1>Empty :(</h1>;
-	}
-}
-
-render(<Testing/>, document.getElementById('testing'))
+createRoot(document.getElementById("root")!).render(<Testing />);

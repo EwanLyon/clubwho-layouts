@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { useReplicant } from 'use-nodecg';
+import { useReplicant } from '@nodecg/react-hooks';
 import gsap from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
@@ -64,7 +64,7 @@ function msToTimeStr(ms: number): string {
 	const hours = Math.floor(ms / (1000 * 60 * 60));
 	if (minutes === 0) {
 		return seconds.toString();
-	} else if (hours === 0) {	
+	} else if (hours === 0) {
 		return `${minutes}:${padTimeNumber(seconds)}`;
 	} else {
 		return `${hours}:${padTimeNumber(minutes)}:${padTimeNumber(seconds)}`;

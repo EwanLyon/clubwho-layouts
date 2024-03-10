@@ -1,9 +1,9 @@
-import React from 'react';
-import { render } from 'react-dom';
-import styled from 'styled-components';
+import React from "react";
+import { createRoot } from "react-dom/client";
+import styled from "styled-components";
 
-import { LoZSSMeta } from './components/livesplit/lozss-meta';
-import { LoZSSLiveSplit } from './components/livesplit/lozss-livesplit';
+import { LoZSSMeta } from "./components/livesplit/lozss-meta";
+import { LoZSSLiveSplit } from "./components/livesplit/lozss-livesplit";
 
 const SpeedrunContainer = styled.div`
 	/* background: #000000; */
@@ -71,12 +71,12 @@ const LoZChatBox = styled.video``;
 export const Speedrun: React.FC = () => {
 	return (
 		<SpeedrunContainer>
-			<BGImage src={require('./assets/LoZSSBG.png')} />
+			<BGImage src={require("./assets/LoZSSBG.png")} />
 			<HorizontalCentre>
 				<Vertical>
 					<WebcamBox />
 					<LoZChatBox playsInline muted autoPlay loop>
-						<source src={require('./assets/LoZSSChat.webm')} />
+						<source src={require("./assets/LoZSSChat.webm")} />
 					</LoZChatBox>
 					<LoZSSMeta />
 				</Vertical>
@@ -90,4 +90,4 @@ export const Speedrun: React.FC = () => {
 	);
 };
 
-render(<Speedrun />, document.getElementById('speedrun'));
+createRoot(document.getElementById("root")!).render(<Speedrun />);
