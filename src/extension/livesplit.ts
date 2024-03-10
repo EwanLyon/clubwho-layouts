@@ -194,7 +194,8 @@ function calcSplitTime(splitIndex: number) {
 	return timerRep.value.milliseconds - (splitsRep.value[splitIndex - 1].time ?? -timerRep.value.milliseconds);
 }
 
-function timeStrToMS(time: string) {
+function timeStrToMS(time?: string) {
+	if (!time) return Number.MAX_SAFE_INTEGER;
 	const ts = time.split(':');
 	if (ts.length === 2) {
 		ts.unshift('00'); // Adds 0 hours if they are not specified.
@@ -223,16 +224,17 @@ function parseSplitsFile(fileLocation: string) {
 		}
 
 		// Get all split times
+		// console.log(JSON.stringify(lssFile))
 		splitsArr = lssFile.Run.Segments[0].Segment.map((segment: Record<any, any>, i: number) => {
-			const segmentHistory: number[] = segment.SegmentHistory[0].Time.map((time: any) => {
+			const segmentHistory: number[] = segment.SegmentHistory[0]?.Time?.map((time: any) => {
 				return timeStrToMS(time[timeComparison][0]);
-			});
+			}) ?? [];
 
 			const split: Split = {
 				index: i,
-				bestRun: timeStrToMS(segment.SplitTimes[0]?.SplitTime[0][timeComparison][0]),
+				bestRun: timeStrToMS(segment.SplitTimes[0]?.SplitTime[0]?.[timeComparison]?.[0]),
 					// gameTime: timeStrToMS(segment.SplitTimes[0]?.SplitTime[0]?.GameTime[0]),
-				bestSplit: timeStrToMS(segment.BestSegmentTime[0][timeComparison][0]),
+				bestSplit: timeStrToMS(segment.BestSegmentTime[0]?.[timeComparison]?.[0]),
 					// gameTime: timeStrToMS(segment.BestSegmentTime[0]?.GameTime[0]),
 				splitHistory: segmentHistory
 			}
@@ -240,7 +242,7 @@ function parseSplitsFile(fileLocation: string) {
 		});
 
 		// Get attempt history
-		const previousRuns: PreviousRun[] = lssFile.Run.AttemptHistory[0].Attempt.map((attempt: Record<any, any>) => {
+		const previousRuns: PreviousRun[] = lssFile.Run.AttemptHistory[0].Attempt?.map((attempt: Record<any, any>) => {
 			let finished = false;
 			const startTime = new Date(attempt['$']['started']);
 			const endTime = new Date(attempt['$']['ended']);
@@ -257,7 +259,7 @@ function parseSplitsFile(fileLocation: string) {
 				time: time,
 				finished: finished
 			} as PreviousRun
-		});
+		}) ?? [];
 		
 		// Get run info
 		runMetadataRep.value = {

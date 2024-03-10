@@ -18,14 +18,14 @@ const HBSplitContainer = styled.div`
 	margin: 0 ${(props: SplitStyles) => (props.current ? 30 : 10)}px;
 
 	& > span {
-		font-size: ${(props: SplitStyles) => (props.current ? 25 : 20)}px;
+		font-size: ${(props: SplitStyles) => (props.current ? 20 : 18)}px;
 	}
 `;
 
 const EventImg = styled.img`
 	object-fit: contain;
-	flex-grow: 1;
-	width: 100%;
+	width: 70%;
+	height: 60%;
 `;
 
 const SplitName = styled.span`

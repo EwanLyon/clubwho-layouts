@@ -37,7 +37,7 @@ const SocailImg = styled.img`
 
 const HorizontalCentre = styled.div`
 	width: 100%;
-	height: 849px;
+	height: 908px;
 	display: flex;
 	align-items: center;
 `;
@@ -47,8 +47,8 @@ const Vertical = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
-	height: 849px; // Border
-	width: 412px;
+	height: 908px; // Border
+	width: 306px;
 `;
 
 const WebcamBox = styled.div`
@@ -61,15 +61,15 @@ const MainGameplay = styled.div`
 	border-left: 1px #ffffff solid;
 	border-bottom: 1px #ffffff solid;
 	position: absolute;
-	width: 1508px;
-	height: 849px;
+	width: 1613px;
+	height: 908px;
 	right: -1px;
 	top: -1px;
 `;
 
 const BottomSegment = styled.div`
 	width: 100%;
-	height: 230px;
+	height: 172px;
 	display: flex;
 	align-items: center;
 `;
@@ -85,7 +85,7 @@ export const Speedrun: React.FC = () => {
 						<SocailImg src={require('./assets/social/Twitter_col.svg')} />
 						CLUBWHOM
 					</SocialName>
-					<TwitchChat style={{ width: '100%', height: 210 }} />
+					<div style={{minHeight: 265}} />
 					<HBMeta />
 				</Vertical>
 				<MainGameplay />

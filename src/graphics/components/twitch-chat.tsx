@@ -57,6 +57,9 @@ const TwitchEmote = styled.img`
 	width: 28px;
 `;
 
+const TwitchChatText = styled.span`
+`;
+
 interface Message {
 	msg: Record<string, any>;
 }
@@ -68,7 +71,7 @@ const TwitchChatMessage: React.FC<Message> = (props: Message) => {
 	return (
 		<TwitchChatMessageContainer>
 			<TwitchChatUsername style={{ color: colour }}>{displayNameRegex.exec(props.msg._raw)?.[1]}</TwitchChatUsername>
-			{...parseEmotes(props.msg._raw, props.msg.content.value)}
+			<TwitchChatText>{...parseEmotes(props.msg._raw, props.msg.content.value)}</TwitchChatText>
 		</TwitchChatMessageContainer>
 	);
 };
@@ -80,11 +83,11 @@ function parseEmotes(rawMessage: string, content: string): (string | JSX.Element
 	const emoteExec = emoteRegex.exec(rawMessage);
 	const emoteRaw = emoteExec?.[1]!;
 	if (emoteRaw === '') return [content];
-	
+
 	// Get each emote
 	const emotesSplit = emoteRaw.split('/');
 	const emoteObj: {id: string, start: number, end: number}[] = [];
-	
+
 	// Create an object for each emote with its ID, start and end
 	emotesSplit.forEach((emote) => {
 		const [id, offsets] = emote.split(':');
@@ -93,9 +96,9 @@ function parseEmotes(rawMessage: string, content: string): (string | JSX.Element
 			emoteObj.push({ id, start: parseInt(startOffset), end: parseInt(endOffset) + 1 });
 		});
 	});
-	
+
 	emoteObj.sort((a, b) => a.start - b.start);
-	
+
 	let newMsg: (string | JSX.Element)[] = [];
 
 	// Include the start of the sentence

@@ -7,6 +7,7 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { Timer, Split as ISplit } from '../../../types/livesplit';
 
 import { HBSplit } from './hb-split';
+import { TwitchChat } from '../twitch-chat';
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -134,8 +135,8 @@ export const HBLiveSplit: React.FC<Props> = (props: Props) => {
 		<HBLiveSplitContainer className={props.className} style={props.style}>
 			<SplitsContainer ref={splitsContainerRef}>
 				{splits}
-				<div style={{ minWidth: 500 }} />
 			</SplitsContainer>
+			<TwitchChat style={{ flexGrow: 1, height: '100%', fontSize: 20, flexBasis: 0 }} />
 			<TimerBox>
 				<Timer>{`${msToTimeStr(timerRep.milliseconds)}.${Math.floor((timerRep.milliseconds % 1000) / 100)}`}</Timer>
 				<SplitTimer>{`${msToTimeStr(timerRep.splitMilliseconds)}.${Math.floor(
